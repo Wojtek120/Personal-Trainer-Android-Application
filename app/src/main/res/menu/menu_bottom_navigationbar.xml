@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/iconHome"
+        android:icon="@drawable/icon_home"
+        android:title="">
+    </item>
+
+    <item
+        android:id="@+id/iconStats"
+        android:icon="@drawable/icon_stats"
+        android:title="">
+    </item>
+
+    <item
+        android:id="@+id/iconPrograms"
+        android:icon="@drawable/icon_programs"
+        android:title="">
+    </item>
+
+    <item
+        android:id="@+id/iconSearch"
+        android:icon="@drawable/icon_search"
+        android:title="">
+    </item>
+
+    <item
+        android:id="@+id/iconProfile"
+        android:icon="@drawable/icon_profile"
+        android:title="">
+    </item>
+</menu>

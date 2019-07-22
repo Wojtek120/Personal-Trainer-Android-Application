@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PersonalTrainer</string>
+    <string name="squat">Squat</string>
+    <string name="bench">Bench</string>
+    <string name="deadlift">Deadlift</string>
+    <string name="max">Max:</string>
+    <string name="edit_profile">Edit Profile</string>
+</resources>
