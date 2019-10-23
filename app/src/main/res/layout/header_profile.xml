@@ -23,6 +23,17 @@
                     android:text="Wojtek120"
                     android:textColor="@color/black"
                     android:textSize="15sp"/>
+                
+                <ImageView
+                    android:src="@drawable/ic_menu"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/menuProfile"/>
 
 
             </RelativeLayout>

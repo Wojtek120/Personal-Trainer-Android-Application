@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/relativeLayout1">
 
-            <include layout="@layout/layout_top_tabs"/>
+            <include layout="@layout/header_tabs"/>
 
         </RelativeLayout>
 

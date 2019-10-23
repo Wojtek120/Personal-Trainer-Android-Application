@@ -19,8 +19,8 @@
         <activity android:name=".Search.SearchActivity" />
         <activity android:name=".Stats.StatsActivity" />
         <activity android:name=".Programs.ProgramsActivity" />
-        <activity android:name=".Profile.SettingsActivity" />
         <activity android:name=".Profile.ProfileActivity" />
+        <activity android:name=".Profile.ProfileSettingsActivity" />
     </application>
 
 </manifest>

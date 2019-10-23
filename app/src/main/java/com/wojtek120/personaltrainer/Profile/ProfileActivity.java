@@ -1,8 +1,11 @@
 package com.wojtek120.personaltrainer.Profile;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import com.wojtek120.personaltrainer.Utils.BottomNavigationbarHelper;
 public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUMBER = 4;
+    private Context context = ProfileActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +31,22 @@ public class ProfileActivity extends AppCompatActivity {
         setToolbar();
         changeBottomNavbarLook();
         Log.d(TAG, "running");
+    }
+
+    /**
+     * Set toolbar
+     */
+    private void setToolbar(){
+        Toolbar toolbar = findViewById(R.id.profileTabs);
+        setSupportActionBar(toolbar);
+
+        ImageView menuImageView = findViewById(R.id.menuProfile);
+        menuImageView.setOnClickListener(v -> {
+            Log.d(TAG, "Profile settings opening");
+            Intent intent = new Intent(context, ProfileSettingsActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     /**
@@ -42,30 +62,5 @@ public class ProfileActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
         menuItem.setChecked(true);
-    }
-
-    private void setToolbar(){
-        Toolbar toolbar = findViewById(R.id.profileTabs);
-        setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Log.d(TAG, "clicked " + item);
-
-                switch (item.getItemId()){
-                    case R.id.menuProfile:
-                        Log.d(TAG, "test");
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-
-        return true;
     }
 }

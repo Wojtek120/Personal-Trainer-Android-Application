@@ -5,4 +5,7 @@
     <string name="deadlift">Deadlift</string>
     <string name="max">Max:</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="options">Opcje</string>
+    <string name="back">cofnij</string>
+    <string name="account_settings">Ustawienia konta</string>
 </resources>
