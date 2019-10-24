@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">PersonalTrainer</string>
-    <string name="squat">Squat</string>
-    <string name="bench">Bench</string>
-    <string name="deadlift">Deadlift</string>
-    <string name="max">Max:</string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="squat">Przysiad</string>
+    <string name="bench">Ławka</string>
+    <string name="deadlift">Martwy</string>
+    <string name="max">Maks:</string>
+    <string name="edit_profile">Edytuj profil</string>
     <string name="options">Opcje</string>
-    <string name="back">cofnij</string>
+    <string name="back">Cofnij</string>
+    <string name="log_out">Wyloguj</string>
     <string name="account_settings">Ustawienia konta</string>
 </resources>

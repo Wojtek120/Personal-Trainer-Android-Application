@@ -1,4 +1,5 @@
 package com.wojtek120.personaltrainer.Profile;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +24,6 @@ import com.wojtek120.personaltrainer.Utils.BottomNavigationbarHelper;
 public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUMBER = 4;
-    private ProgressBar progressBar = findViewById(R.id.progressBarInProfileLayout);
     private Context context = ProfileActivity.this;
 
     @Override
@@ -33,8 +33,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         setToolbar();
         changeBottomNavbarLook();
+        turnOffProgressBar();
 
-        progressBar.setVisibility(View.GONE);
         Log.d(TAG, "running");
     }
 
@@ -67,5 +67,13 @@ public class ProfileActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
         menuItem.setChecked(true);
+    }
+
+    /**
+     * Make progress bar disappear
+     */
+    private void turnOffProgressBar() {
+        ProgressBar progressBar = findViewById(R.id.progressBarInProfileLayout);
+        progressBar.setVisibility(View.GONE);
     }
 }
