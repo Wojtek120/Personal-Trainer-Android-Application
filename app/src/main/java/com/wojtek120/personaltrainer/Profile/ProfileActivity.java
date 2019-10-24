@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.wojtek120.personaltrainer.Utils.BottomNavigationbarHelper;
 public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUMBER = 4;
+    private ProgressBar progressBar = findViewById(R.id.progressBarInProfileLayout);
     private Context context = ProfileActivity.this;
 
     @Override
@@ -30,6 +33,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         setToolbar();
         changeBottomNavbarLook();
+
+        progressBar.setVisibility(View.GONE);
         Log.d(TAG, "running");
     }
 
