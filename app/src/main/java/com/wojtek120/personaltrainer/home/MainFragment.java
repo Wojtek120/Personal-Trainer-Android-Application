@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.Home;
+package com.wojtek120.personaltrainer.home;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

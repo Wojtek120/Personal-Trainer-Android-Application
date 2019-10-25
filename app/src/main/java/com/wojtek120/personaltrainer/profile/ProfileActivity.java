@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.Profile;
+package com.wojtek120.personaltrainer.profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.Utils.BottomNavigationbarHelper;
+import com.wojtek120.personaltrainer.utils.BottomNavigationbarHelper;
 
 /**
  * Activity with settings

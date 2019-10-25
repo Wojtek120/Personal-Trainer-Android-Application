@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.Utils;
+package com.wojtek120.personaltrainer.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.wojtek120.personaltrainer.Home.MainActivity;
-import com.wojtek120.personaltrainer.Profile.ProfileActivity;
-import com.wojtek120.personaltrainer.Programs.ProgramsActivity;
+import com.wojtek120.personaltrainer.home.MainActivity;
+import com.wojtek120.personaltrainer.profile.ProfileActivity;
+import com.wojtek120.personaltrainer.programs.ProgramsActivity;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.Search.SearchActivity;
-import com.wojtek120.personaltrainer.Stats.StatsActivity;
+import com.wojtek120.personaltrainer.search.SearchActivity;
+import com.wojtek120.personaltrainer.stats.StatsActivity;
 
 /**
  * Bottom navigation bar helper

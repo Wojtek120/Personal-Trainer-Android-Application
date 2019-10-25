@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.Profile;
+package com.wojtek120.personaltrainer.profile;
 
 import android.content.Context;
 import android.os.Bundle;

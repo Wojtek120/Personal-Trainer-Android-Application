@@ -1,17 +1,17 @@
-package com.wojtek120.personaltrainer.Home;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+package com.wojtek120.personaltrainer.home;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.Utils.BottomNavigationbarHelper;
+import com.wojtek120.personaltrainer.utils.BottomNavigationbarHelper;
 
 public class MainActivity extends AppCompatActivity {
 

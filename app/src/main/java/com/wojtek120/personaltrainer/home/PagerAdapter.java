@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.Home;
+package com.wojtek120.personaltrainer.home;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,10 +13,8 @@ import java.util.List;
  * Here all fragments are stored
  */
 public class PagerAdapter extends FragmentPagerAdapter {
-    private static final String TAG = "FragmentPagerAdapter";
-
     /** List with all fragments that are used in PagerAdapter class */
-    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
 
     public PagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
@@ -30,23 +28,23 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        return fragmentList.get(position);
     }
 
     /**
      * Returns count of all fragments
-     * @return size of mFragmentList
+     * @return size of fragmentList
      */
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return fragmentList.size();
     }
 
     /**
-     * Adds fragment to the list mFragmentList
+     * Adds fragment to the list fragmentList
      * @param fragment fragment to be added
      */
     public void addFragment(Fragment fragment){
-        mFragmentList.add(fragment);
+        fragmentList.add(fragment);
     }
 }
