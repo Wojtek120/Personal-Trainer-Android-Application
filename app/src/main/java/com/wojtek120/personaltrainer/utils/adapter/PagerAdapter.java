@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.home;
+package com.wojtek120.personaltrainer.utils.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -9,4 +9,9 @@
     <string name="back">Cofnij</string>
     <string name="log_out">Wyloguj</string>
     <string name="account_settings">Ustawienia konta</string>
+    <string name="save">Zapisz</string>
+    <string name="change_image">Zmień zdjęcie</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="email">E-mail</string>
+    <string name="description">Opis użytkonika</string>
 </resources>

@@ -3,36 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_center_pages" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/profileSettingsLayout1">
+        android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/relativeLayoutInEditProfileSettings1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/profileSettingsLayout2">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/header_profile_settings"/>
+            <include layout="@layout/header_profile_settings_edit" />
 
         </RelativeLayout>
-        
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/profileSettingsLayout3"
-            android:layout_below="@+id/profileSettingsLayout2"
-            android:layout_marginBottom="52dp">
+            android:layout_below="@+id/relativeLayoutInEditProfileSettings1"
+            android:id="@+id/relativeLayoutInEditProfileSettings2">
 
-            <include layout="@layout/layout_profile_settings_center"/>
+            <include layout="@layout/layout_profile_settings_edit_center"/>
 
         </RelativeLayout>
 
-        <include layout="@layout/bottom_navigationbar"/>
-
-
     </RelativeLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

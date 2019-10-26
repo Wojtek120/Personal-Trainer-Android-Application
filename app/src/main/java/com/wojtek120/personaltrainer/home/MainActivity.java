@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.BottomNavigationbarHelper;
+import com.wojtek120.personaltrainer.utils.adapter.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
