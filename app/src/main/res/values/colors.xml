@@ -9,4 +9,8 @@
     <color name="black">#000</color>
 
     <color name="link">#0000EE</color>
+
+    <color name="logo_color_yellow_light">#EFD9A0</color>
+    <color name="logo_color_yellow_medium">#CEAC57</color>
+    <color name="logo_color_yellow_dark">#B68F18</color>
 </resources>
