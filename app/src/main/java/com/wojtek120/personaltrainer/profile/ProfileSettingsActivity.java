@@ -14,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.general.ActivityNumbers;
+import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.utils.adapter.StatePageAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.Arrays;
 
 public class ProfileSettingsActivity extends AppCompatActivity {
     private final String TAG = "ProfileSettingsActivity";
+    private static final int ACTIVITY_NUMBER = ActivityNumbers.PROFILE_ACTIVITY;
     private Context context = this;
     private StatePageAdapter statePageAdapter;
     private ViewPager viewPager;
@@ -38,6 +42,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         configureAllOptionsToSettingList();
         addOnClickListenerToBackArrow();
         addAllFragments();
+        bottomNavbarSetup();
 
         Log.d(TAG, "created settings");
     }
@@ -89,5 +94,17 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         relativeLayout.setVisibility(View.GONE);
         viewPager.setAdapter(statePageAdapter);
         viewPager.setCurrentItem(fragmentNumber);
+    }
+
+
+
+    /**
+     * Setup bottom navbar
+     */
+    private void bottomNavbarSetup(){
+        BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
+        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavigationbar);
+
+        bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, context, ACTIVITY_NUMBER);
     }
 }

@@ -1,44 +1,40 @@
 package com.wojtek120.personaltrainer.search;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.utils.BottomNavigationbarHelper;
+import com.wojtek120.personaltrainer.general.ActivityNumbers;
+import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 
 /**
  * Activity with search options
  */
 public class SearchActivity extends AppCompatActivity {
     private final static String TAG = "SearchActivity";
-    private static final int ACTIVITY_NUMBER = 3;
+    private static final int ACTIVITY_NUMBER = ActivityNumbers.SEARCH_ACTIVITY;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        changeBottomNavbarLook();
+        bottomNavbarSetup();
         Log.d(TAG, "running");
     }
 
+
     /**
-     * Change bottom navigation bar animations
+     * Setup bottom navbar
      */
-    private void changeBottomNavbarLook(){
-        Log.d(TAG, "changeBottomNavbarLook: starting");
-
+    private void bottomNavbarSetup(){
+        BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavigationbar);
-        BottomNavigationbarHelper.changeBottomNavbarLook(bottomNavigationViewEx);
-        BottomNavigationbarHelper.setupNavigationBetweenActivities(SearchActivity.this, bottomNavigationViewEx);
 
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
-        menuItem.setChecked(true);
+        bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, SearchActivity.this, ACTIVITY_NUMBER);
     }
 }

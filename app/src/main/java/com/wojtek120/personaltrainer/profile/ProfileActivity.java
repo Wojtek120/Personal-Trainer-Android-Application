@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -16,23 +14,30 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.utils.BottomNavigationbarHelper;
+import com.wojtek120.personaltrainer.general.ActivityNumbers;
+import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
+import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 
 /**
  * Activity with settings
  */
 public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
-    private static final int ACTIVITY_NUMBER = 4;
+    private static final int ACTIVITY_NUMBER = ActivityNumbers.PROFILE_ACTIVITY;
     private Context context = ProfileActivity.this;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        progressBar = findViewById(R.id.progressBarInProfileLayout);
+
         setToolbar();
-        changeBottomNavbarLook();
+        bottomNavbarSetup();
+        changeProfilePhoto();
+
         turnOffProgressBar();
 
         Log.d(TAG, "running");
@@ -46,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ImageView menuImageView = findViewById(R.id.menuProfile);
+
         menuImageView.setOnClickListener(v -> {
             Log.d(TAG, "Profile settings opening");
             Intent intent = new Intent(context, ProfileSettingsActivity.class);
@@ -55,25 +61,27 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Change bottom navigation bar animations
+     * Setup bottom navbar
      */
-    private void changeBottomNavbarLook(){
-        Log.d(TAG, "changeBottomNavbarLook: starting");
-
+    private void bottomNavbarSetup(){
+        BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavigationbar);
-        BottomNavigationbarHelper.changeBottomNavbarLook(bottomNavigationViewEx);
-        BottomNavigationbarHelper.setupNavigationBetweenActivities(ProfileActivity.this, bottomNavigationViewEx);
 
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
-        menuItem.setChecked(true);
+        bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, ProfileActivity.this, ACTIVITY_NUMBER);
+    }
+
+    //TODO temporary - just for testing
+    private void changeProfilePhoto() {
+
+        ImageView photo = findViewById(R.id.imageProfile);
+        String URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Björnsson_Arnold_Classic_2017.jpg/1200px-Björnsson_Arnold_Classic_2017.jpg";
+        ImageLoaderSingleton.displayImage("", URL, photo, progressBar);
     }
 
     /**
      * Make progress bar disappear
      */
     private void turnOffProgressBar() {
-        ProgressBar progressBar = findViewById(R.id.progressBarInProfileLayout);
         progressBar.setVisibility(View.GONE);
     }
 }
