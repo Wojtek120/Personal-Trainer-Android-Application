@@ -15,7 +15,9 @@
     <string name="email">E-mail</string>
     <string name="description">Opis użytkonika</string>
     <string name="logo">Logo</string>
-    <string name="password">Password</string>
+    <string name="password">Hasło</string>
     <string name="login">Zaloguj</string>
     <string name="sign_up">Utwórz konto</string>
+    <string name="make_new_account">Załóż konto</string>
+    <string name="repeat_password">Powtórz hasło</string>
 </resources>
