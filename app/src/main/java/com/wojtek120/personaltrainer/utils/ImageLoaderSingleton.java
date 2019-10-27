@@ -48,7 +48,7 @@ public class ImageLoaderSingleton {
      */
     private static ImageLoaderConfiguration getImageLoaderConfiguration(Context context) {
 
-        int logo = R.drawable.icon_barbell;
+        int logo = R.drawable.bar_icon;
 
         DisplayImageOptions imageOptions = new DisplayImageOptions.Builder()
                 .imageScaleType(ImageScaleType.EXACTLY)
