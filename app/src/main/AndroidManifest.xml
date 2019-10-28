@@ -24,6 +24,8 @@
         <activity android:name=".programs.ProgramsActivity" />
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.ProfileSettingsActivity" />
+        <activity android:name=".authentication.LoginActivity" />
+        <activity android:name=".authentication.RegisterActivity" />
     </application>
 
 </manifest>
