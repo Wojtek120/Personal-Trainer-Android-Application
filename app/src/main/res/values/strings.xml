@@ -20,4 +20,7 @@
     <string name="sign_up">Utwórz konto</string>
     <string name="make_new_account">Załóż konto</string>
     <string name="repeat_password">Powtórz hasło</string>
+    <string name="fill_email">Uzupełnij pole z adresem e-mail</string>
+    <string name="fill_password">Uzupełnij pole z hasłem</string>
+    <string name="authentification_failed">Logowanie nieudane</string>
 </resources>
