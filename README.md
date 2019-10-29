@@ -11,3 +11,5 @@
 + [CircleImageView](https://github.com/hdodenhof/CircleImageView) - to crop profile images to a circle
 + [Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader) - to load images
 + [Firebase](https://firebase.google.com/) - database, authentication
++ [Lombok](https://projectlombok.org/) - some useful annotations 
++ [androidannotations](https://github.com/androidannotations) - even more useful annotations 
