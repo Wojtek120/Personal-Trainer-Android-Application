@@ -130,10 +130,7 @@ public class UserService {
      */
     private void addUserDetailsToDatabase(String userId, String username) {
 
-        UserDetails user = UserDetails.builder()
-                .userId(userId)
-                .username(username)
-                .build();
+        UserDetails user = new UserDetails(userId, username, "", "", 0., 0., 0.);
 
         database.collection(DatabaseCollectionNames.USER_DETAILS)
                 .add(user)
