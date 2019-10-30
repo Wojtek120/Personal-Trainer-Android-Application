@@ -76,7 +76,7 @@ public class UserService {
                                 //add new authentication data if username doesn't exist
                                 addNewUserDataAndSendVerificationEmail(email, password, username);
 
-                                FirebaseAuth.getInstance().signOut();
+                                signOut();
 
                             } else {
                                 String usernameExistsMessage = activity.getString(R.string.username_exists);
@@ -93,6 +93,13 @@ public class UserService {
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+
+    /**
+     * Sign out currently logged user
+     */
+    public void signOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 
     /**
@@ -247,4 +254,6 @@ public class UserService {
 
         return true;
     }
+
+
 }

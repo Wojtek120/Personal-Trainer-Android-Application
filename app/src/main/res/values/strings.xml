@@ -31,4 +31,5 @@
     <string name="verification_email_error">Wysyłanie weryfikacyjnej wiadomości e-mail nie powiodło się. Skontaktuj się z administracją.</string>
     <string name="verification_email_send">Wysłasno e-mail z prośbą o weryfikację adresu</string>
     <string name="email_not_verified">Logowanie nieudane, sprawdź e-mail w celu jego weryfikacji.</string>
+    <string name="cancel">Anuluj</string>
 </resources>

@@ -13,4 +13,7 @@
     <color name="logo_color_yellow_light">#EFD9A0</color>
     <color name="logo_color_yellow_medium">#CEAC57</color>
     <color name="logo_color_yellow_dark">#B68F18</color>
+
+    <color name="button_gray_dark">#888687</color>
+    <color name="button_gray_light">#CAC8C8</color>
 </resources>
