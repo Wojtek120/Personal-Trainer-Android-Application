@@ -83,8 +83,8 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     private void addAllFragments() {
         statePageAdapter = new StatePageAdapter(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        statePageAdapter.addFragment(new ProfileSettingsEditFragment(), getString(R.string.edit_profile));
-        statePageAdapter.addFragment(new ProfileSettingsLogOutFragment(), getString(R.string.log_out));
+        statePageAdapter.addFragment(new ProfileSettingsEditFragment_(), getString(R.string.edit_profile));
+        statePageAdapter.addFragment(new ProfileSettingsLogOutFragment_(), getString(R.string.log_out));
     }
 
     /**
