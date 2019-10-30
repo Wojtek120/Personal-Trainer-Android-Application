@@ -2,35 +2,40 @@ package com.wojtek120.personaltrainer.authentication;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.utils.AuthenticationFacade;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
+import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+@EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
     private Context context;
-    private ProgressBar progressBar;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    @ViewById(R.id.progressBarInLoggingPage)
+    ProgressBar progressBar;
+
+    @ViewById(R.id.emailLoggingPage)
+    EditText emailEditText;
+
+    @ViewById(R.id.passwordLoggingPage)
+    EditText passwordEditText;
+
+    @AfterViews
+    void setup() {
         context = LoginActivity.this;
-
-        progressBar = findViewById(R.id.progressBarInLoggingPage);
-
-        setupLoggingButton();
         toggleProgressBar();
-
     }
 
     /**
@@ -40,48 +45,45 @@ public class LoginActivity extends AppCompatActivity {
      * if email and password aren't null authentication method is invoked,
      * in other case user is informed to write it
      */
-    private void setupLoggingButton() {
-        Button loginButton = findViewById(R.id.loginButton);
+    @Click(R.id.loginButton)
+    void setupLoggingButton() {
 
-        loginButton.setOnClickListener(v -> {
-            EditText emailEditText = findViewById(R.id.emailLoggingPage);
-            String email = emailEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
-            EditText passwordEditText = findViewById(R.id.passwordLoggingPage);
-            String password = passwordEditText.getText().toString();
+        toggleProgressBar();
 
+        if (validate(email, password)) {
+            AuthenticationFacade.authenticateAndRedirectOnSuccess(email, password, (Activity) context, progressBar);
+        } else {
             toggleProgressBar();
-
-            if(!checkIfIsEmpty(email, password)) {
-                AuthenticationFacade.authenticate(email, password, (Activity) context, progressBar);
-            }
-
-        });
+        }
     }
 
 
     /**
      * Checks if string with email or password is empty
      * and shows error message if is
-     * @param email - string with email
+     *
+     * @param email    - string with email
      * @param password - string with password
-     * @return - true if any of string is empty, otherwise false
+     * @return - false if any of string is empty, otherwise true
      */
-    private boolean checkIfIsEmpty(String email, String password) {
+    private boolean validate(String email, String password) {
 
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             String emailEmptyMessage = getString(R.string.fill_email);
             ToastMessage.showMessage(context, emailEmptyMessage);
-            return true;
+            return false;
         }
 
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             String passwordEmptyMessage = getString(R.string.fill_password);
             ToastMessage.showMessage(context, passwordEmptyMessage);
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -96,4 +98,16 @@ public class LoginActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * Add on click listener to register link
+     * to redirect to sign up activity after clicking on it
+     */
+    @Click(R.id.signUpLinkLoggingPage)
+    void addOnClickListenerToRegisterLink() {
+        Intent intent = new Intent(context, RegisterActivity_.class);
+        startActivity(intent);
+    }
+
+
 }

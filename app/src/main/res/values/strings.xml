@@ -21,6 +21,11 @@
     <string name="make_new_account">Załóż konto</string>
     <string name="repeat_password">Powtórz hasło</string>
     <string name="fill_email">Uzupełnij pole z adresem e-mail</string>
+    <string name="fill_username">Uzupełnij pole z nazwą użytkownika</string>
     <string name="fill_password">Uzupełnij pole z hasłem</string>
     <string name="authentification_failed">Logowanie nieudane</string>
+    <string name="different_password">Hasła muszą być takie same</string>
+    <string name="registration_fail">Rejestracja nie powiodła się</string>
+    <string name="username_exists">Użytkownik o takiej nazwie istnieje</string>
+    <string name="too_short_password">Hasło jest za którkie. Wpisz minimum 6 znaków.</string>
 </resources>

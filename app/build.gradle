@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     compileOptions {
         sourceCompatibility 1.8
@@ -23,6 +24,7 @@ android {
     }
 }
 
+def AAVersion = '4.6.0'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -31,11 +33,36 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "com.google.android.material:material:1.0.0"
+
+    //bottom navigation bar
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
+
+    //image in circle
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //universal image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //firebase analytics
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
+    //firebase authentication
     implementation 'com.google.firebase:firebase-auth:19.1.0'
+
+    //firestore - database
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+
+    //Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    //AndroidAnnotations
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
 }
 
+
 apply plugin: 'com.google.gms.google-services'
+
+//AndroidAnnotation
+apply plugin: 'com.android.application'

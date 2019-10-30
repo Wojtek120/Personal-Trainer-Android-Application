@@ -24,8 +24,8 @@
         <activity android:name=".programs.ProgramsActivity" />
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.ProfileSettingsActivity" />
-        <activity android:name=".authentication.LoginActivity" android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".authentication.RegisterActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".authentication.LoginActivity_" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".authentication.RegisterActivity_" android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

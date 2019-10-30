@@ -1,6 +1,7 @@
-package com.wojtek120.personaltrainer.utils;
+package com.wojtek120.personaltrainer.utils.database;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -8,6 +9,8 @@ import android.widget.ProgressBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.home.MainActivity;
+import com.wojtek120.personaltrainer.utils.ToastMessage;
 
 public class AuthenticationFacade {
 
@@ -34,19 +37,22 @@ public class AuthenticationFacade {
     }
 
     /**
-     * Authenticate user
+     * Authenticate user and redirect to main page if success
      * @param email - e-mail address
      * @param password - user password
      * @param activity - activity
      * @param progressBar - progress bar to hide when authentication is completed
      */
-    public static void authenticate(String email, String password, Activity activity, ProgressBar progressBar) {
+    public static void authenticateAndRedirectOnSuccess(String email, String password, Activity activity, ProgressBar progressBar) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, task -> {
+
                     if (task.isSuccessful()) {
                         Log.d(TAG, "sign in success");
                         FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        redirectToMainActivity(activity);
 
                     } else {
                         Log.w(TAG, "sign in failed", task.getException());
@@ -57,5 +63,27 @@ public class AuthenticationFacade {
 
                     progressBar.setVisibility(View.GONE);
                 });
+    }
+
+
+    /**
+     * Get current user
+     * @return current user or null if isn't logged
+     */
+    public static FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+
+    /**
+     * Redirects to main activity if user is logged in
+     * @param activity - current activity
+     */
+    private static void redirectToMainActivity(Activity activity){
+        if(AuthenticationFacade.getCurrentUser() != null) {
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
+        }
     }
 }

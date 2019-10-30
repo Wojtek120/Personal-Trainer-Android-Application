@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
-import com.wojtek120.personaltrainer.authentication.LoginActivity;
-import com.wojtek120.personaltrainer.utils.AuthenticationFacade;
+import com.wojtek120.personaltrainer.authentication.LoginActivity_;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
+import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
 
 public class StartUp extends Application {
 
@@ -30,7 +30,7 @@ public class StartUp extends Application {
     private void redirectToLoggingActivityIfIsNotSignIn() {
 
         if (!AuthenticationFacade.isSignedIn()) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, LoginActivity_.class);
             startActivity(intent);
         }
 
