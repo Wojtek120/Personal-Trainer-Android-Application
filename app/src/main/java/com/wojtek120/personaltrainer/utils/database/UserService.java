@@ -33,6 +33,8 @@ public class UserService {
 
     private static final String TAG = "UserService";
     private FirebaseFirestore database;
+    private ProgressBar progressBar;
+    private Activity activity;
 
 
     @AfterInject
@@ -47,16 +49,20 @@ public class UserService {
      * First checks if all data are written and if are valid
      * then checks if username already exists
      * then register new authentication data
-     * at the end it adds user details
+     * then add user details
+     * at the end send verification e-mail
      *
      * @param email            - e-mail address
      * @param username         - username
      * @param password         - password
      * @param repeatedPassword - repeated password
-     * @param activity         - activity
-     * @param progressBar      - progress bar to set visibility to gone after registration
+     * @param activityArg         - activity
+     * @param progressBarArg      - progress bar to set visibility to gone after registration
      */
-    public void registerNewUser(String email, String username, String password, String repeatedPassword, Activity activity, ProgressBar progressBar) {
+    public void registerNewUser(String email, String username, String password, String repeatedPassword, Activity activityArg, ProgressBar progressBarArg) {
+
+        progressBar = progressBarArg;
+        activity = activityArg;
 
         if (validateRegistrationData(email, username, password, repeatedPassword)) {
 
@@ -68,7 +74,9 @@ public class UserService {
                             if (isUsernameNew(task.getResult(), username)) {
 
                                 //add new authentication data if username doesn't exist
-                                Task<AuthResult> authResultTask = addNewUserData(email, password, username, activity);
+                                addNewUserDataAndSendVerificationEmail(email, password, username);
+
+                                FirebaseAuth.getInstance().signOut();
 
                             } else {
                                 String usernameExistsMessage = activity.getString(R.string.username_exists);
@@ -77,9 +85,9 @@ public class UserService {
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            progressBar.setVisibility(View.GONE);
                         }
 
-                        progressBar.setVisibility(View.GONE);
                     });
         } else {
             progressBar.setVisibility(View.GONE);
@@ -89,15 +97,14 @@ public class UserService {
 
     /**
      * Add authentication data to database
+     * send verification email
      * after all call method to add user details
      *
      * @param email    - e-mail address
      * @param password - password
      * @param username - username
-     * @param activity - activity
-     * @return task to wait for
      */
-    private Task<AuthResult> addNewUserData(String email, String password, String username, Activity activity) {
+    private void addNewUserDataAndSendVerificationEmail(String email, String password, String username) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         Task<AuthResult> authTask = firebaseAuth.createUserWithEmailAndPassword(email, password);
         authTask.addOnCompleteListener(activity, task -> {
@@ -107,25 +114,60 @@ public class UserService {
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
+                //send verification email
+                sendVerificationEmail();
+
                 //add user details
                 addUserDetailsToDatabase(user.getUid(), username);
 
 
             } else {
                 Log.w(TAG, "create user failure", task.getException());
+                progressBar.setVisibility(View.GONE);
 
                 String failMessage = activity.getString(R.string.registration_fail);
                 ToastMessage.showMessage(activity, failMessage);
             }
         });
+    }
 
-        return authTask;
+    /**
+     * Send verification e-mail to new registered user
+     */
+    private void sendVerificationEmail() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            currentUser.sendEmailVerification()
+                    .addOnCompleteListener(task -> {
+
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "SendingVerificationEmail::Success");
+
+                            String emailVerificationMessage = context.getString(R.string.verification_email_send);
+                            ToastMessage.showMessage(context, emailVerificationMessage);
+                            progressBar.setVisibility(View.GONE);
+
+//                            Intent intent = new Intent(context, RegisterActivity_.class);
+//                            context.startActivity(intent);
+
+                            activity.finish();
+
+                        } else {
+                            Log.d(TAG, "SendingVerificationEmail::Error");
+
+                            String emailVerificationErrorMessage = context.getString(R.string.verification_email_error);
+                            ToastMessage.showMessage(context, emailVerificationErrorMessage);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+        }
     }
 
     /**
      * Add registered user details to database
      *
-     * @param userId - id of user used in firestore
+     * @param userId   - id of user used in firestore
      * @param username - e-mail address
      */
     private void addUserDetailsToDatabase(String userId, String username) {
@@ -141,8 +183,9 @@ public class UserService {
     /**
      * Check if in result from database username exists
      * ignores upper/lower case
+     *
      * @param resultOfTask - result from db
-     * @param username - username to check
+     * @param username     - username to check
      * @return true if username is valid (doesn't exists), otherwise false
      */
     private boolean isUsernameNew(QuerySnapshot resultOfTask, String username) {
@@ -197,7 +240,7 @@ public class UserService {
             return false;
         }
 
-        if(password.length() < 6) {
+        if (password.length() < 6) {
             String tooShortPassword = context.getString(R.string.too_short_password);
             ToastMessage.showMessage(context, tooShortPassword);
         }

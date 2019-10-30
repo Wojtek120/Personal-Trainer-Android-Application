@@ -21,15 +21,15 @@ public class StartUp extends Application {
 
         ImageLoaderSingleton.configure(this);
 
-        redirectToLoggingActivityIfIsNotSignIn();
+        redirectToLoggingActivityIfIsNotSignInOrVerified();
     }
 
     /**
-     * Redirects to logging activity if user isn't signed in
+     * Redirects to logging activity if user isn't signed in or email isn't verified
      */
-    private void redirectToLoggingActivityIfIsNotSignIn() {
+    private void redirectToLoggingActivityIfIsNotSignInOrVerified() {
 
-        if (!AuthenticationFacade.isSignedIn()) {
+        if (!AuthenticationFacade.isSignedIn() || !AuthenticationFacade.isEmailVerified()) {
             Intent intent = new Intent(this, LoginActivity_.class);
             startActivity(intent);
         }

@@ -28,4 +28,7 @@
     <string name="registration_fail">Rejestracja nie powiodła się</string>
     <string name="username_exists">Użytkownik o takiej nazwie istnieje</string>
     <string name="too_short_password">Hasło jest za którkie. Wpisz minimum 6 znaków.</string>
+    <string name="verification_email_error">Wysyłanie weryfikacyjnej wiadomości e-mail nie powiodło się. Skontaktuj się z administracją.</string>
+    <string name="verification_email_send">Wysłasno e-mail z prośbą o weryfikację adresu</string>
+    <string name="email_not_verified">Logowanie nieudane, sprawdź e-mail w celu jego weryfikacji.</string>
 </resources>

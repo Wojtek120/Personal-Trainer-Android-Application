@@ -45,14 +45,27 @@ public class AuthenticationFacade {
      */
     public static void authenticateAndRedirectOnSuccess(String email, String password, Activity activity, ProgressBar progressBar) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, task -> {
 
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "sign in success");
+
                         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        redirectToMainActivity(activity);
+                        if(isEmailVerified()) {
+
+                            Log.d(TAG, "sign in success");
+                            redirectToMainActivity(activity);
+
+                        } else {
+
+                            Log.d(TAG, "sign in failed, email not verified");
+                            String emailNotVerifiedMessage = activity.getString(R.string.email_not_verified);
+                            ToastMessage.showMessage(activity, emailNotVerifiedMessage);
+
+                            firebaseAuth.signOut();
+                        }
 
                     } else {
                         Log.w(TAG, "sign in failed", task.getException());
@@ -72,6 +85,20 @@ public class AuthenticationFacade {
      */
     public static FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+
+    /**
+     * Check if e-mail is verified
+     * @return true if e-mail is verified else false
+     */
+    public static boolean isEmailVerified() {
+
+        if(getCurrentUser() == null) {
+            return false;
+        }
+
+        return getCurrentUser().isEmailVerified();
     }
 
 
