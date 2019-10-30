@@ -23,7 +23,8 @@ public class ProfileSettingsLogOutFragment extends Fragment {
     /**
      * Set on click listener to sign out button
      * When button is clicked, user is logged out,
-     * flags are set in order to couldn't go back (on back button) to activity
+     * flags are set to clear activity stack
+     * in order to couldn't go back (on back button) to activity
      * and user is redirect to logging page
      */
     @Click(R.id.logoutConfirmButton)
