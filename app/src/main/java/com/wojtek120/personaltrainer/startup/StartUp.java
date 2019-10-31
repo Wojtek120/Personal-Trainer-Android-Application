@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.wojtek120.personaltrainer.authentication.LoginActivity_;
-import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
 
 public class StartUp extends Application {
@@ -19,7 +18,7 @@ public class StartUp extends Application {
 
         super.onCreate();
 
-        ImageLoaderSingleton.configure(this);
+//        ImageLoaderSingleton.configure(this);
 
         redirectToLoggingActivityIfIsNotSignInOrVerified();
     }

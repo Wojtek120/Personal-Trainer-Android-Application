@@ -9,12 +9,12 @@
 
 
         <TextView
-            android:id="@+id/tvSquatMax"
+            android:id="@+id/squatMaxTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
-            android:layout_marginLeft="29dp"
-            android:text="180"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="26dp"
+            android:text="@string/max_before_loaded_from_db"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,22 +28,22 @@
             android:layout_marginLeft="26dp"
             android:text="@string/squat"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSquatMax" />
+            app:layout_constraintTop_toBottomOf="@+id/squatMaxTv" />
 
         <TextView
-            android:id="@+id/tvBenchMax"
+            android:id="@+id/benchMaxTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="110"
+            android:text="@string/max_before_loaded_from_db"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/tvDeadliftMax"
+            app:layout_constraintEnd_toStartOf="@+id/deadliftMaxTv"
             app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toEndOf="@+id/tvSquatMax"
+            app:layout_constraintStart_toEndOf="@+id/squatMaxTv"
             app:layout_constraintTop_toBottomOf="@+id/textMax" />
 
         <TextView
@@ -52,22 +52,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:text="@string/bench"
             app:layout_constraintEnd_toStartOf="@+id/textDeadliftMax"
             app:layout_constraintHorizontal_bias="0.523"
             app:layout_constraintStart_toEndOf="@+id/textSquatMax"
-            app:layout_constraintTop_toBottomOf="@+id/tvBenchMax"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/benchMaxTv" />
 
         <TextView
-            android:id="@+id/tvDeadliftMax"
+            android:id="@+id/deadliftMaxTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="34dp"
-            android:layout_marginRight="34dp"
-            android:text="220"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:text="@string/max_before_loaded_from_db"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +80,7 @@
             android:layout_marginRight="26dp"
             android:text="@string/deadlift"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDeadliftMax" />
+            app:layout_constraintTop_toBottomOf="@+id/deadliftMaxTv" />
 
         <TextView
             android:id="@+id/textMax"

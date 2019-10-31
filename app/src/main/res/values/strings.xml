@@ -32,4 +32,5 @@
     <string name="verification_email_send">Wysłasno e-mail z prośbą o weryfikację adresu</string>
     <string name="email_not_verified">Logowanie nieudane, sprawdź e-mail w celu jego weryfikacji.</string>
     <string name="cancel">Anuluj</string>
+    <string name="max_before_loaded_from_db">00.00</string>
 </resources>

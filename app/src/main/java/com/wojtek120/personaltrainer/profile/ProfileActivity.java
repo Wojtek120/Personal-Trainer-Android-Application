@@ -2,13 +2,11 @@ package com.wojtek120.personaltrainer.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -17,71 +15,91 @@ import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
+import com.wojtek120.personaltrainer.utils.database.ProfileService;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * Activity with settings
  */
+@EActivity(R.layout.activity_profile)
 public class ProfileActivity extends AppCompatActivity {
     private final static String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PROFILE_ACTIVITY;
-    private Context context = ProfileActivity.this;
+
+    Context context;
+
+    @Bean
+    ImageLoaderSingleton imageLoader;
+    @Bean
+    ProfileService profileService;
+
+    @ViewById(R.id.progressBarInProfileLayout)
     ProgressBar progressBar;
+    @ViewById(R.id.imageProfile)
+    ImageView photo;
+    @ViewById(R.id.profileNameDisplayUnderPhoto)
+    TextView usernameTv;
+    @ViewById(R.id.profileDescriptionDisplayUnderPhoto)
+    TextView descriptionTv;
+    @ViewById
+    TextView usernameHeaderTv;
+    @ViewById
+    TextView squatMaxTv;
+    @ViewById
+    TextView benchMaxTv;
+    @ViewById
+    TextView deadliftMaxTv;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
 
-        progressBar = findViewById(R.id.progressBarInProfileLayout);
+    @AfterViews
+    void setUpProfileActivity() {
 
-        setToolbar();
-        bottomNavbarSetup();
-        changeProfilePhoto();
+        context = this;
 
-        turnOffProgressBar();
-
-        Log.d(TAG, "running");
+        setProfileInformation();
     }
 
     /**
      * Set toolbar
      */
-    private void setToolbar(){
-        Toolbar toolbar = findViewById(R.id.profileTabs);
+    @ViewById(R.id.profileTabs)
+    void setToolbar(Toolbar toolbar){
+        Log.d(TAG, ":: setting toolbar");
         setSupportActionBar(toolbar);
-
-        ImageView menuImageView = findViewById(R.id.menuProfile);
-
-        menuImageView.setOnClickListener(v -> {
-            Log.d(TAG, "Profile settings opening");
-            Intent intent = new Intent(context, ProfileSettingsActivity.class);
-            startActivity(intent);
-        });
-
     }
+
 
     /**
      * Setup bottom navbar
      */
-    private void bottomNavbarSetup(){
+    @ViewById(R.id.bottomNavigationbar)
+    void bottomNavbarSetup(BottomNavigationViewEx bottomNavigationViewEx){
         BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
-        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavigationbar);
-
         bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, ProfileActivity.this, ACTIVITY_NUMBER);
     }
 
-    //TODO temporary - just for testing
-    private void changeProfilePhoto() {
-
-        ImageView photo = findViewById(R.id.imageProfile);
-        String URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Björnsson_Arnold_Classic_2017.jpg/1200px-Björnsson_Arnold_Classic_2017.jpg";
-        ImageLoaderSingleton.displayImage("", URL, photo, progressBar);
-    }
 
     /**
-     * Make progress bar disappear
+     * Add on click listener to dots to open menu
      */
-    private void turnOffProgressBar() {
-        progressBar.setVisibility(View.GONE);
+    @Click(R.id.menuProfile)
+    void setOnClickListenerToMenu() {
+        Log.d(TAG, "Profile settings opening");
+        Intent intent = new Intent(context, ProfileSettingsActivity.class);
+        startActivity(intent);
     }
+
+
+    /**
+     * Set up profile info with data from database
+     */
+    private void setProfileInformation() {
+        profileService.fillProfileInfo(usernameTv, usernameHeaderTv, descriptionTv, squatMaxTv, benchMaxTv, deadliftMaxTv, photo, progressBar);
+    }
+
 }

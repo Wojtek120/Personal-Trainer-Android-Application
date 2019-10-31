@@ -26,46 +26,33 @@
             android:layout_below="@id/relativeLayoutInProfileCenter1"
             android:background="@drawable/border_bottom">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutLayoutInProfileCenter1"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                app:civ_border_color="@color/grey"
+                app:civ_border_width="1dp"/>
+
+
+            <RelativeLayout
+                android:id="@+id/layoutWithMaxes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_below="@id/imageProfile">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_weight="25">
+                <include layout="@layout/layout_profile_info_top" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageProfile"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerVertical="true"
-                        app:civ_border_color="@color/black"
-                        app:civ_border_width="2dp" />
+            </RelativeLayout>
 
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="75">
-
-                    <include layout="@layout/layout_profile_info_top" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
 
             <!--Bottom section - profile name and description-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linearLayoutLayoutInProfileCenter1"
+                android:layout_below="@id/layoutWithMaxes"
                 android:orientation="vertical"
                 android:padding="25dp">
 
@@ -74,21 +61,28 @@
                     android:id="@+id/profileNameDisplayUnderPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wojtek120"
+                    android:text="@string/username"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginTop="6dp" />
 
-                <TextView
-                    android:id="@+id/profileDescriptionDisplayUnderPhoto"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Opis mojego profilu"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"/>
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/profileDescriptionDisplayUnderPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"/>
+
+                </ScrollView>
+
 
             </LinearLayout>
 

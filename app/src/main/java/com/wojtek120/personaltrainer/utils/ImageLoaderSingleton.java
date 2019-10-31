@@ -2,6 +2,7 @@ package com.wojtek120.personaltrainer.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -16,26 +17,35 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.wojtek120.personaltrainer.R;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+
 /**
  * Configure UniversalImageLoader
  * and get singleton instance of it
  */
+@EBean(scope = EBean.Scope.Singleton)
 public class ImageLoaderSingleton {
 
+    private static final String TAG = "ImageLoaderBean :: ";
     private static boolean configured = false;
     private static ImageLoader imageLoader;
 
-    private ImageLoaderSingleton() {
-    }
+    @RootContext
+    Context context;
 
     /**
      * Configure ImageLoader
-     * @param context - context
      */
-    public static void configure(Context context) {
+    @AfterInject
+    void configure() {
+        Log.d(TAG, "Initializing image loader");
+
 
         if(!configured) {
-            ImageLoader.getInstance().init(getImageLoaderConfiguration(context));
+            imageLoader = ImageLoader.getInstance();
+            imageLoader.init(getImageLoaderConfiguration(context));
             configured = true;
         }
 
@@ -46,7 +56,7 @@ public class ImageLoaderSingleton {
      * @param context - context
      * @return ImageLoaderConfiguration
      */
-    private static ImageLoaderConfiguration getImageLoaderConfiguration(Context context) {
+    private ImageLoaderConfiguration getImageLoaderConfiguration(Context context) {
 
         int logo = R.drawable.bar_icon;
 
@@ -70,7 +80,7 @@ public class ImageLoaderSingleton {
     /**
      * Throw exception if ImageLoader isn't configured - it needs to be configured before using
      */
-    private static void checkIfConfigured() {
+    private void checkIfConfigured() {
         if(!configured) {
             throw new IllegalStateException("ImageLoader needs to be configured first");
         }
@@ -87,11 +97,10 @@ public class ImageLoaderSingleton {
      * @param imageView - ImageView which should display image
      * @param progressBar - ProgressBar which appears at the beginning of loading and disappears when image is loaded
      */
-    public static void displayImage(String prefix, String URL, ImageView imageView, ProgressBar progressBar) {
+    public void displayImage(String prefix, String URL, ImageView imageView, ProgressBar progressBar) {
 
         checkIfConfigured();
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(prefix + URL, imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

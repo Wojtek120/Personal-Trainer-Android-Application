@@ -9,6 +9,7 @@ import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -21,6 +22,9 @@ public class ProfileSettingsEditFragment extends Fragment {
     @ViewById(R.id.photo)
     ImageView photo;
 
+    @Bean
+    ImageLoaderSingleton imageLoader;
+
 
     @AfterViews
     void setupEditProfileSettings() {
@@ -30,7 +34,7 @@ public class ProfileSettingsEditFragment extends Fragment {
     //TODO temporary - just for testing
     private void changeProfilePhoto() {
         String URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Björnsson_Arnold_Classic_2017.jpg/1200px-Björnsson_Arnold_Classic_2017.jpg";
-        ImageLoaderSingleton.displayImage("", URL, photo, null);
+        imageLoader.displayImage("", URL, photo, null);
     }
 
     /**
