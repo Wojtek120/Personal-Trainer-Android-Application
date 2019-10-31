@@ -6,10 +6,10 @@
 </p>
 
 ## Used
-+ [Material Design](https://material.io/develop/android/) - CoordinatorLayout, Toolbars, TextInputLayout
-+ [BottomNavigationViewEx](https://github.com/ittianyu/BottomNavigationViewEx) - to change the look of bottom navigation bar
-+ [CircleImageView](https://github.com/hdodenhof/CircleImageView) - to crop profile images to a circle
-+ [Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader) - to load images
 + [Firebase](https://firebase.google.com/) - database, authentication
 + [Lombok](https://projectlombok.org/) - some useful annotations 
 + [androidannotations](https://github.com/androidannotations) - even more useful annotations 
++ [Material Design](https://material.io/develop/android/) - CoordinatorLayout, Toolbars, TextInputLayout
++ [BottomNavigationViewEx](https://github.com/ittianyu/BottomNavigationViewEx) - to change the look of bottom navigation bar
++ [Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader) - to load images
++ [CircleImageView](https://github.com/hdodenhof/CircleImageView) - to crop profile images to a circle
