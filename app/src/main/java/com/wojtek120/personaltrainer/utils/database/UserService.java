@@ -23,6 +23,7 @@ import org.androidannotations.annotations.RootContext;
 
 /**
  * Data access object to Firebase Database - Cloud Firestone
+ * Used for connection to database to register/sign out user
  * Written in singleton pattern.
  */
 @EBean(scope = EBean.Scope.Singleton)
@@ -173,6 +174,7 @@ public class UserService {
 
     /**
      * Add registered user details to database
+     * Id of document in firestore is the same as id of the user
      *
      * @param userId   - id of user used in firestore
      * @param username - e-mail address
@@ -182,9 +184,10 @@ public class UserService {
         UserDetails user = new UserDetails(userId, username, "", "", 0., 0., 0.);
 
         database.collection(DatabaseCollectionNames.USER_DETAILS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
-                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                .document(userId)
+                .set(user)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
     }
 
     /**
