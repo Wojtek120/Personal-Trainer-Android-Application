@@ -90,10 +90,20 @@ public class ProfileActivity extends AppCompatActivity {
     @Click(R.id.menuProfile)
     void setOnClickListenerToMenu() {
         Log.d(TAG, "Profile settings opening");
-        Intent intent = new Intent(context, ProfileSettingsActivity.class);
+        Intent intent = new Intent(context, ProfileSettingsActivity_.class);
         startActivity(intent);
     }
 
+    /**
+     * Add on click listener to edit profile button
+     * redirects to edit profile fragment
+     */
+    @Click(R.id.textEditProfile)
+    void addOnClickListnerToEditProfileBtn() {
+        Intent intent = new Intent(context, ProfileSettingsActivity_.class);
+        intent.putExtra("startingFragment", getString(R.string.edit_profile));
+        startActivity(intent);
+    }
 
     /**
      * Set up profile info with data from database
