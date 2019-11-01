@@ -97,6 +97,13 @@ public class AuthenticationFacade {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    /**
+     * Get current user email
+     * @return current user email or null if isn't logged
+     */
+    public static String getEmailOfCurrentUser() {
+        return getCurrentUser().getEmail();
+    }
 
     /**
      * Check if e-mail is verified

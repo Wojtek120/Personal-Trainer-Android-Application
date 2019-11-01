@@ -3,6 +3,7 @@ package com.wojtek120.personaltrainer.utils.database;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -68,6 +69,43 @@ public class ProfileService {
                 squatTv.setText(String.format(Locale.ENGLISH, "%.2f", user.getSquatMax()));
                 benchTv.setText(String.format(Locale.ENGLISH, "%.2f", user.getBenchMax()));
                 deadliftTv.setText(String.format(Locale.ENGLISH, "%.2f", user.getDeadliftMax()));
+
+                imageLoader.displayImage("", user.getProfilePhoto(), profileImage, null);
+            }
+
+
+            progressBar.setVisibility(View.GONE);
+        });
+
+    }
+
+
+    /**
+     * Fill user profile with data from database
+     *
+     * @param usernameEt    - EditText with username
+     * @param emailEt       - EditText with email
+     * @param descriptionEt - EditText with description of profile
+     * @param squatEt       - EditText with squat max
+     * @param benchEt       - EditText with bench max
+     * @param deadliftEt    - EditText with deadlift max
+     * @param profileImage  - ImageView with profile image
+     * @param progressBar   - progress bar to turn off after loading
+     */
+    public void fillProfileEditInfo(EditText usernameEt, EditText emailEt, EditText descriptionEt, EditText squatEt, EditText benchEt, EditText deadliftEt, ImageView profileImage, ProgressBar progressBar) {
+
+        DocumentReference docRef = database.collection(DatabaseCollectionNames.USER_DETAILS).document(AuthenticationFacade.getIdOfCurrentUser());
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            UserDetails user = documentSnapshot.toObject(UserDetails.class);
+
+            if (user != null) {
+                usernameEt.setText(user.getUsername());
+                descriptionEt.setText(user.getDescription());
+                squatEt.setText(String.format(Locale.ENGLISH, "%.2f", user.getSquatMax()));
+                benchEt.setText(String.format(Locale.ENGLISH, "%.2f", user.getBenchMax()));
+                deadliftEt.setText(String.format(Locale.ENGLISH, "%.2f", user.getDeadliftMax()));
+
+                emailEt.setText(AuthenticationFacade.getEmailOfCurrentUser());
 
                 imageLoader.displayImage("", user.getProfilePhoto(), profileImage, null);
             }

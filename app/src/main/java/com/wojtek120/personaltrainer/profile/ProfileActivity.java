@@ -99,7 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
      * redirects to edit profile fragment
      */
     @Click(R.id.textEditProfile)
-    void addOnClickListnerToEditProfileBtn() {
+    void addOnClickListenerToEditProfileBtn() {
         Intent intent = new Intent(context, ProfileSettingsActivity_.class);
         intent.putExtra("startingFragment", getString(R.string.edit_profile));
         startActivity(intent);

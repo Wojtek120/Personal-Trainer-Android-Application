@@ -1,12 +1,15 @@
 package com.wojtek120.personaltrainer.profile;
 
 import android.content.Intent;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
+import com.wojtek120.personaltrainer.utils.database.ProfileService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -19,22 +22,34 @@ public class ProfileSettingsEditFragment extends Fragment {
 
     private final String TAG = "ProfileSettingsEditFragment";
 
-    @ViewById(R.id.photo)
-    ImageView photo;
-
     @Bean
     ImageLoaderSingleton imageLoader;
+    @Bean
+    ProfileService profileService;
+
+    @ViewById
+    ProgressBar progressBar;
+
+    @ViewById
+    ImageView photo;
+    @ViewById
+    EditText usernameEditText;
+    @ViewById
+    EditText emailEditText;
+    @ViewById
+    EditText descriptionEditText;
+    @ViewById
+    EditText squatMaxEditText;
+    @ViewById
+    EditText benchMaxEditText;
+    @ViewById
+    EditText deadliftMaxEditText;
+
 
 
     @AfterViews
     void setupEditProfileSettings() {
-        changeProfilePhoto();
-    }
-
-    //TODO temporary - just for testing
-    private void changeProfilePhoto() {
-        String URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Björnsson_Arnold_Classic_2017.jpg/1200px-Björnsson_Arnold_Classic_2017.jpg";
-        imageLoader.displayImage("", URL, photo, null);
+        profileService.fillProfileEditInfo(usernameEditText, emailEditText, descriptionEditText, squatMaxEditText, benchMaxEditText, deadliftMaxEditText, photo, progressBar);
     }
 
     /**

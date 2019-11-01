@@ -40,10 +40,8 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     @ViewById(R.id.profileOptionsListView)
     ListView listView;
 
-
     @Extra
     String startingFragment;
-
 
     @AfterViews
     void SetUpProfileSettingsActivity() {
