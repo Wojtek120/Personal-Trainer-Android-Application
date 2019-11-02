@@ -33,4 +33,6 @@
     <string name="email_not_verified">Logowanie nieudane, sprawdź e-mail w celu jego weryfikacji.</string>
     <string name="cancel">Anuluj</string>
     <string name="max_before_loaded_from_db">00.00</string>
+    <string name="type_number_in_maxes">Wpisz liczby w miejsce maksów</string>
+    <string name="fill_all_fields">Żadne pole nie może być puste</string>
 </resources>
