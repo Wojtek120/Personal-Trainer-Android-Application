@@ -10,7 +10,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wojtek120.personaltrainer.R;
@@ -57,8 +59,8 @@ public class UserService {
      * @param username         - username
      * @param password         - password
      * @param repeatedPassword - repeated password
-     * @param activityArg         - activity
-     * @param progressBarArg      - progress bar to set visibility to gone after registration
+     * @param activityArg      - activity
+     * @param progressBarArg   - progress bar to set visibility to gone after registration
      */
     public void registerNewUser(String email, String username, String password, String repeatedPassword, Activity activityArg, ProgressBar progressBarArg) {
 
@@ -67,29 +69,22 @@ public class UserService {
 
         if (validateRegistrationData(email, username, password, repeatedPassword)) {
 
-            database.collection(DatabaseCollectionNames.USER_DETAILS)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
+            CollectionReference users = database.collection(DatabaseCollectionNames.USER_DETAILS);
+            Query query = users.whereEqualTo("username", username);
+            query.get().addOnCompleteListener(task -> {
 
-                            if (isUsernameNew(task.getResult(), username)) {
+                if (isUsernameUnique(task)) {
 
-                                //add new authentication data if username doesn't exist
-                                addNewUserDataAndSendVerificationEmail(email, password, username);
+                    //add new authentication data if username doesn't exist
+                    addNewUserDataAndSendVerificationEmail(email, password, username);
 
-                                signOut();
+                    signOut();
 
-                            } else {
-                                String usernameExistsMessage = activity.getString(R.string.username_exists);
-                                ToastMessage.showMessage(activity, usernameExistsMessage);
-                            }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                }
 
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                            progressBar.setVisibility(View.GONE);
-                        }
-
-                    });
+            });
         } else {
             progressBar.setVisibility(View.GONE);
         }
@@ -191,25 +186,31 @@ public class UserService {
     }
 
     /**
-     * Check if in result from database username exists
-     * ignores upper/lower case
+     * Checks if field is unique,
+     * gets result of task and checks if it isn't empty
+     * if it isn't empty checks if it doesn't belong to current user
      *
-     * @param resultOfTask - result from db
-     * @param username     - username to check
-     * @return true if username is valid (doesn't exists), otherwise false
+     * @param task - result of query
+     * @return true if username is unique, otherwise show message and return false
      */
-    private boolean isUsernameNew(QuerySnapshot resultOfTask, String username) {
+    public boolean isUsernameUnique(Task<QuerySnapshot> task) {
+        if (task.isSuccessful()) {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+                Log.d(TAG, document.getId() + " => " + document.getData());
 
-        for (QueryDocumentSnapshot document : resultOfTask) {
-            Log.d(TAG, document.getId() + " => " + document.getData());
+                if(!AuthenticationFacade.isSignedIn() || !document.getId().equals(AuthenticationFacade.getIdOfCurrentUser())) {
 
-            String currentUsername = document.toObject(UserDetails.class).getUsername();
-            if (currentUsername.toLowerCase().equals(username.toLowerCase())) {
-                return false;
+                    ToastMessage.showMessage(context, context.getString(R.string.username_exists));
+                    return false;
+                }
+
             }
-        }
 
-        return true;
+            return true;
+        } else {
+            ToastMessage.showMessage(context, context.getString(R.string.something_went_wrong));
+            return false;
+        }
     }
 
 
