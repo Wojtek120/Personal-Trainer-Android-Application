@@ -13,11 +13,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.dialog.ConfirmPasswordDialog;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.utils.adapter.StatePageAdapter;
+import com.wojtek120.personaltrainer.utils.database.ProfileService;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -27,11 +30,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @EActivity(R.layout.activity_profile_settings)
-public class ProfileSettingsActivity extends AppCompatActivity {
+public class ProfileSettingsActivity extends AppCompatActivity implements ConfirmPasswordDialog.OnConfirmPasswordListener {
     private final String TAG = "ProfileSettingsActivity";
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PROFILE_ACTIVITY;
     private Context context = this;
     private StatePageAdapter statePageAdapter;
+
+    @Bean
+    ProfileService profileService;
 
     @ViewById(R.id.pagesContainer)
     ViewPager viewPager;
@@ -123,5 +129,19 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     void bottomNavbarSetup(BottomNavigationViewEx bottomNavigationViewEx) {
         BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
         bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, context, ACTIVITY_NUMBER);
+    }
+
+
+    /**
+     * Callback function of dialogbox in which user write his password in order to change email
+     * Here reauthentication and change email address method is called
+     *
+     * @param password - user password
+     * @param newEmail - new email
+     */
+    @Override
+    public void OnConfirmPassword(String password, String newEmail) {
+        Log.d(TAG, ":: OnConfirmPassword password: " + password + " email " + newEmail);
+        profileService.changeEmail(newEmail, password);
     }
 }

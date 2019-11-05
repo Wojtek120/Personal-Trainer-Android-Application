@@ -137,7 +137,7 @@ public class UserService {
     /**
      * Send verification e-mail to new registered user
      */
-    private void sendVerificationEmail() {
+    public void sendVerificationEmail() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
@@ -149,12 +149,14 @@ public class UserService {
 
                             String emailVerificationMessage = context.getString(R.string.verification_email_send);
                             ToastMessage.showMessage(context, emailVerificationMessage);
-                            progressBar.setVisibility(View.GONE);
 
-//                            Intent intent = new Intent(context, RegisterActivity_.class);
-//                            context.startActivity(intent);
+                            if(progressBar != null) {
+                                progressBar.setVisibility(View.GONE);
+                            }
 
-                            activity.finish();
+                            if(activity != null) {
+                                activity.finish();
+                            }
 
                         } else {
                             Log.d(TAG, "SendingVerificationEmail::Error");

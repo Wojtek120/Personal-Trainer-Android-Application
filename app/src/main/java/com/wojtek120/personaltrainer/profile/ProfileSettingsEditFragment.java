@@ -8,13 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.filter.DecimalInputFilter;
+import com.wojtek120.personaltrainer.model.UserDetails;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.NumberUtils;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
+import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
 import com.wojtek120.personaltrainer.utils.database.ProfileService;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,7 +29,7 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.fragment_profile_settings_edit)
 public class ProfileSettingsEditFragment extends Fragment {
 
-    private final String TAG = "ProfileSettingsEditFragment";
+    private final String TAG = "ProfileEditFragment";
 
     private Context context;
 
@@ -102,18 +105,26 @@ public class ProfileSettingsEditFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        String squat = squatMaxEditText.getText().toString();
-        String bench = benchMaxEditText.getText().toString();
-        String deadlift = deadliftMaxEditText.getText().toString();
+
+        String squatStr = squatMaxEditText.getText().toString();
+        String benchStr = benchMaxEditText.getText().toString();
+        String deadliftStr = deadliftMaxEditText.getText().toString();
         String username = usernameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
 
-        if (!validateValues(squat, bench, deadlift, username, email, description)) {
+        if (!validateValues(squatStr, benchStr, deadliftStr, username, email, description)) {
             progressBar.setVisibility(View.GONE);
             return;
         }
 
+        double squat = Double.parseDouble(squatStr);
+        double bench = Double.parseDouble(benchStr);
+        double deadlift = Double.parseDouble(deadliftStr);
+
+        UserDetails user = new UserDetails(AuthenticationFacade.getIdOfCurrentUser(), username, description, "", squat, bench, deadlift);
+
+        profileService.save(user, email, progressBar, (AppCompatActivity) context);
     }
 
 
@@ -177,4 +188,5 @@ public class ProfileSettingsEditFragment extends Fragment {
 
         return true;
     }
+
 }

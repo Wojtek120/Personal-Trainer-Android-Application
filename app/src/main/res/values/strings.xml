@@ -25,7 +25,7 @@
     <string name="fill_password">Uzupełnij pole z hasłem</string>
     <string name="authentification_failed">Logowanie nieudane</string>
     <string name="different_password">Hasła muszą być takie same</string>
-    <string name="registration_fail">Rejestracja nie powiodła się</string>
+    <string name="registration_fail">Rejestracja nie powiodła się. Adres jest zajęty lub niepoprawny.</string>
     <string name="username_exists">Użytkownik o takiej nazwie istnieje</string>
     <string name="too_short_password">Hasło jest za którkie. Wpisz minimum 6 znaków.</string>
     <string name="verification_email_error">Wysyłanie weryfikacyjnej wiadomości e-mail nie powiodło się. Skontaktuj się z administracją.</string>
@@ -35,4 +35,13 @@
     <string name="max_before_loaded_from_db">00.00</string>
     <string name="type_number_in_maxes">Wpisz liczby w miejsce maksów</string>
     <string name="fill_all_fields">Żadne pole nie może być puste</string>
+    <string name="something_went_wrong">Coś poszło nie tak...</string>
+    <string name="changes_saved">Zapisano zmiany</string>
+    <string name="is_already_in_use">jest w użyciu</string>
+    <string name="email_changed_confirm_password">Aby zmienić adres e-mail potwierdź swoje hasło.</string>
+    <string name="confirm">Zatwierdź</string>
+    <string name="rest_of_data_will_be_saved">Reszta danych została zapisana.</string>
+    <string name="wrong_password">Hasło błędne</string>
+    <string name="email_in_use">Ten adres e-mail jest już zajęty.</string>
+    <string name="email_updated">Zaktualizowano email</string>
 </resources>
