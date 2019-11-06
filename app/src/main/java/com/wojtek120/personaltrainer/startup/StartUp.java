@@ -28,7 +28,7 @@ public class StartUp extends Application {
      */
     private void redirectToLoggingActivityIfIsNotSignInOrVerified() {
 
-        if (!AuthenticationFacade.isSignedIn() || !AuthenticationFacade.isEmailVerified()) {
+        if (AuthenticationFacade.getCurrentUser() == null || !AuthenticationFacade.isSignedIn() || !AuthenticationFacade.isEmailVerified()) {
             Intent intent = new Intent(this, LoginActivity_.class);
             startActivity(intent);
         }
