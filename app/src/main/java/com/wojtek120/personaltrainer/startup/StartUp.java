@@ -18,8 +18,6 @@ public class StartUp extends Application {
 
         super.onCreate();
 
-//        ImageLoaderSingleton.configure(this);
-
         redirectToLoggingActivityIfIsNotSignInOrVerified();
     }
 
