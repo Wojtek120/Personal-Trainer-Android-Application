@@ -44,4 +44,8 @@
     <string name="wrong_password">Hasło błędne</string>
     <string name="email_in_use">Ten adres e-mail jest już zajęty.</string>
     <string name="email_updated">Zaktualizowano email</string>
+    <string name="gallery">Galeria</string>
+    <string name="camera">Kamera</string>
+    <string name="lack_of_permissions">Brakuje odpowiednich zezwoleń</string>
+    <string name="next">Dalej</string>
 </resources>

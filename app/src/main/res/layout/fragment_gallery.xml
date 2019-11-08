@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/galleryRl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/header_gallery"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/galleryLl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/galleryRl1"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="60"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_centerInParent="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+
+            <ImageView
+                android:id="@+id/mainPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/galleryPhotos"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_weight="40"
+            android:layout_height="0dp"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:stretchMode="none"
+            android:numColumns="4">
+
+        </GridView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

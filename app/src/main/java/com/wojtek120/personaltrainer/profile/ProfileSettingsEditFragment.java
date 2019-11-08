@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.filter.DecimalInputFilter;
 import com.wojtek120.personaltrainer.model.UserDetails;
+import com.wojtek120.personaltrainer.profile.photo.EditProfilePhotoActivity_;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.NumberUtils;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
@@ -125,6 +126,16 @@ public class ProfileSettingsEditFragment extends Fragment {
         UserDetails user = new UserDetails(AuthenticationFacade.getIdOfCurrentUser(), username, description, "", squat, bench, deadlift);
 
         profileService.save(user, email, progressBar, (AppCompatActivity) context);
+    }
+
+
+    /**
+     * Add on click listener to edit profile photography
+     */
+    @Click(R.id.change_image_text)
+    void onClickListenerToChangeProfileImage() {
+        Intent intent = new Intent(context, EditProfilePhotoActivity_.class);
+        startActivity(intent);
     }
 
 
