@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.adapter.GridViewAdapter;
+import com.wojtek120.personaltrainer.utils.database.ProfileService;
 import com.wojtek120.personaltrainer.utils.files.ListPaths;
 import com.wojtek120.personaltrainer.utils.files.Paths;
 
@@ -23,6 +24,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
 import java.util.ArrayList;
 
 @EFragment(R.layout.fragment_gallery)
@@ -37,6 +39,8 @@ public class GalleryFragment extends Fragment {
     ListPaths listPaths;
     @Bean
     ImageLoaderSingleton imageLoaderSingleton;
+    @Bean
+    ProfileService profileService;
 
     @ViewById
     ImageView mainPhoto;
@@ -47,7 +51,8 @@ public class GalleryFragment extends Fragment {
     @ViewById
     ProgressBar progressBar;
 
-    ArrayList<String> directories;
+    private ArrayList<String> directoriesPaths;
+    private String pathToChosenImage;
 
     @AfterViews
     void SetUpGalleryFragment() {
@@ -58,16 +63,35 @@ public class GalleryFragment extends Fragment {
 
 
     /**
-     * Initialize spinner to show directories with photos
+     * Initialize spinner to show directoriesPaths with photos
      */
     private void initializeSpinner() {
 
-        directories = listPaths.getPathsToDirectoriesFromPath(paths.PICTURES);
-        directories.add(0, paths.DCIM);
+        directoriesPaths = listPaths.getPathsToDirectoriesFromPath(paths.PICTURES);
+        directoriesPaths.add(0, paths.DCIM);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, directories);
+        ArrayList<String> directoriesName = getNamesOfDirectoriesFromPath();
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, directoriesName);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+    }
+
+
+    /**
+     * Get name of directoriesPaths form directoriesPaths paths
+     * used to display it in spinner
+     *
+     * @return name of directoriesPaths
+     */
+    private ArrayList<String> getNamesOfDirectoriesFromPath() {
+        ArrayList<String> directoriesName = new ArrayList<>();
+
+        for(String path : directoriesPaths) {
+            directoriesName.add(new File(path).getName());
+        }
+
+        return directoriesName;
     }
 
     /**
@@ -87,6 +111,9 @@ public class GalleryFragment extends Fragment {
     @Click(R.id.saveIcon)
     void onClickListenerToSaveIcon() {
         Log.d(TAG, "Saving profile photo");
+
+        progressBar.setVisibility(View.VISIBLE);
+        profileService.saveProfilePhoto(pathToChosenImage, progressBar);
     }
 
     /**
@@ -96,8 +123,8 @@ public class GalleryFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, ":: Spinner dir :: " + directories.get(i));
-                putPhotosInGridView(directories.get(i));
+                Log.d(TAG, ":: Spinner dir :: " + directoriesPaths.get(i));
+                putPhotosInGridView(directoriesPaths.get(i));
             }
 
             @Override
@@ -119,8 +146,12 @@ public class GalleryFragment extends Fragment {
         galleryPhotos.setAdapter(gridViewAdapter);
 
         setImageToMainPhoto(photosPath.get(0));
+        pathToChosenImage = photosPath.get(0);
 
-        galleryPhotos.setOnItemClickListener((adapterView, view, i, l) -> setImageToMainPhoto(photosPath.get(i)));
+        galleryPhotos.setOnItemClickListener((adapterView, view, i, l) -> {
+            setImageToMainPhoto(photosPath.get(i));
+            pathToChosenImage = photosPath.get(i);
+        });
     }
 
 
@@ -138,7 +169,7 @@ public class GalleryFragment extends Fragment {
     /**
      * Puts image from param to main ImageView
      *
-     * @param imagePath
+     * @param imagePath - path to image to display
      */
     private void setImageToMainPhoto(String imagePath) {
         imageLoaderSingleton.displayImage(FILE_PREFIX,imagePath, mainPhoto, progressBar);

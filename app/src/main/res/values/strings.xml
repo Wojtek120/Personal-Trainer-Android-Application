@@ -48,4 +48,6 @@
     <string name="camera">Kamera</string>
     <string name="lack_of_permissions">Brakuje odpowiednich zezwoleń</string>
     <string name="next">Dalej</string>
+    <string name="photo_uploaded">Zdjęcie dodane</string>
+    <string name="image_changed">Zdjęcie zmienione</string>
 </resources>

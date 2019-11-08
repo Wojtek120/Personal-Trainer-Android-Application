@@ -52,6 +52,9 @@ dependencies {
     //firestore - database
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
 
+    //firebase - storage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+
     //Lombok
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'

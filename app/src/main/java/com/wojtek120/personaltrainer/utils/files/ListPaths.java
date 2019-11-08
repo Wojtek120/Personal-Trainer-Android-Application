@@ -1,5 +1,8 @@
 package com.wojtek120.personaltrainer.utils.files;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.androidannotations.annotations.EBean;
 
 import java.io.File;
@@ -40,13 +43,29 @@ public class ListPaths {
         ArrayList<String> pathsToFiles = new ArrayList<>();
         File file = new File(path);
 
+
         for (File fileFromList : file.listFiles()) {
-            if (fileFromList.isFile()) {
+            if (fileFromList.isFile() && isFileImage(fileFromList.getAbsolutePath())) {
                 pathsToFiles.add(fileFromList.getAbsolutePath());
             }
         }
 
         return pathsToFiles;
+    }
+
+
+    /**
+     * Checks if file is image
+     *
+     * @param path - path to file
+     * @return true if is image
+     */
+    private boolean isFileImage(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+
+        return options.outWidth != -1 && options.outHeight != -1;
     }
 
 }

@@ -33,9 +33,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_toRightOf="@id/backIcon"
-                    android:layout_toEndOf="@id/backIcon"
-                    android:layout_toLeftOf="@+id/saveIcon"
-                    android:layout_toStartOf="@+id/saveIcon">
+                    android:layout_toEndOf="@id/backIcon">
                 </Spinner>
 
 
