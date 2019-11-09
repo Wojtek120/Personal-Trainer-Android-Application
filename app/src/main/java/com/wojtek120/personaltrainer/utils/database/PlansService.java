@@ -129,6 +129,7 @@ public class PlansService {
 
         Intent intent = new Intent(context, DaysActivity_.class);
         intent.putExtra("planId", idOfPlans.get(position));
+        intent.putExtra("planName", userPlans.get(position));
         context.startActivity(intent);
 
     }
