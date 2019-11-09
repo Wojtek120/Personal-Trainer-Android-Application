@@ -50,4 +50,6 @@
     <string name="next">Dalej</string>
     <string name="photo_uploaded">Zdjęcie dodane</string>
     <string name="image_changed">Zdjęcie zmienione</string>
+    <string name="user_plans">Plany treningowe</string>
+    <string name="days_of_plan">Dni treningowe</string>
 </resources>

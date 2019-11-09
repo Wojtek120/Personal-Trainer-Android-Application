@@ -11,8 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.home.MainActivity;
+import com.wojtek120.personaltrainer.plans.PlansActivity_;
 import com.wojtek120.personaltrainer.profile.ProfileActivity_;
-import com.wojtek120.personaltrainer.programs.ProgramsActivity;
 import com.wojtek120.personaltrainer.search.SearchActivity;
 import com.wojtek120.personaltrainer.stats.StatsActivity;
 
@@ -58,7 +58,7 @@ public class BottomNavigationbarHelper {
                         break;
 
                     case R.id.iconPrograms:
-                        intent = new Intent(context, ProgramsActivity.class);
+                        intent = new Intent(context, PlansActivity_.class);
                         context.startActivity(intent);
                         break;
 
