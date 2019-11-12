@@ -1,6 +1,7 @@
 package com.wojtek120.personaltrainer.utils.database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.model.DayModel;
+import com.wojtek120.personaltrainer.plans.ExercisesActivity_;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
 
 import org.androidannotations.annotations.AfterInject;
@@ -28,7 +30,7 @@ import java.util.Map;
 public class DaysService {
 
 
-    private static final String TAG = "PlansService";
+    private static final String TAG = "DaysService";
 
     @RootContext
     Context context;
@@ -38,6 +40,8 @@ public class DaysService {
     private ArrayList<String> idOfDays;
 
     private FirebaseFirestore database;
+
+    private String planId;
 
     @AfterInject
     void setUserPlansService() {
@@ -55,6 +59,8 @@ public class DaysService {
     public void setListViewWithDaysOfSelectedPlan(ListView listView, String planId, ProgressBar progressBar) {
 
         Log.d(TAG, "setting ListView in user plans");
+
+        this.planId = planId;
 
         idOfDays = new ArrayList<>();
         userDays = new ArrayList<>();
@@ -92,7 +98,6 @@ public class DaysService {
             Log.d(TAG, document.getId() + " => " + document.getData());
 
 
-
             DayModel day = document.toObject(DayModel.class);
 
             Map<String, String> dayMap = new HashMap<>(2);
@@ -117,8 +122,8 @@ public class DaysService {
 
         SimpleAdapter adapter = new SimpleAdapter(context, userDays,
                 android.R.layout.simple_list_item_2,
-                new String[] {"title", "subtitle"},
-                new int[] {android.R.id.text1,
+                new String[]{"title", "subtitle"},
+                new int[]{android.R.id.text1,
                         android.R.id.text2});
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> navigateToSelectedDayActivity(position));
@@ -133,6 +138,14 @@ public class DaysService {
      */
     private void navigateToSelectedDayActivity(int position) {
         Log.d(TAG, "Selected " + idOfDays.get(position));
+
+
+        Intent intent = new Intent(context, ExercisesActivity_.class);
+        intent.putExtra("planId", planId);
+        intent.putExtra("dayId", idOfDays.get(position));
+        intent.putExtra("planName", userDays.get(position).get("title"));
+        intent.putExtra("date", userDays.get(position).get("subtitle"));
+        context.startActivity(intent);
     }
 
 }

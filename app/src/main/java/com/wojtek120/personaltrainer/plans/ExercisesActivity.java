@@ -3,6 +3,7 @@ package com.wojtek120.personaltrainer.plans;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,32 +11,39 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
-import com.wojtek120.personaltrainer.utils.database.PlansService;
+import com.wojtek120.personaltrainer.utils.database.ExercisesService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
-/**
- * Activity with all training programs
- */
-@EActivity(R.layout.activity_plans)
-public class PlansActivity extends AppCompatActivity {
-    private final static String TAG = "PlansActivity";
+@EActivity(R.layout.activity_exercises)
+public class ExercisesActivity extends AppCompatActivity {
+    private final static String TAG = "ExercisesActivity";
 
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PLANS_ACTIVITY;
 
     @Bean
-    PlansService plansService;
+    ExercisesService exercisesService;
 
-    @ViewById(R.id.plansListView)
+    @ViewById(R.id.exercisesListView)
     ListView listView;
     @ViewById
     ProgressBar progressBar;
 
+    @Extra
+    String planId;
+    @Extra
+    String dayId;
+    @Extra
+    String date;
+    @Extra
+    String planName;
+
     @AfterViews
-    void setUpPlansActivity() {
+    void setUpExercisesActivity() {
 
         addPlansToListView();
 
@@ -48,7 +56,7 @@ public class PlansActivity extends AppCompatActivity {
     private void addPlansToListView() {
         Log.d(TAG, "adding plans to ListView");
 
-        plansService.setListViewWithUserPlans(listView, progressBar);
+        exercisesService.setListViewWithExercises(listView, planId, dayId, progressBar);
 
     }
 
@@ -59,6 +67,23 @@ public class PlansActivity extends AppCompatActivity {
     @ViewById(R.id.bottomNavigationbar)
     void bottomNavbarSetup(BottomNavigationViewEx bottomNavigationViewEx){
         BottomNavigationBarSetup bottomNavigationBarSetup = new BottomNavigationBarSetup();
-        bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, PlansActivity.this, ACTIVITY_NUMBER);
+        bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, ExercisesActivity.this, ACTIVITY_NUMBER);
+    }
+
+
+    /**
+     * Sets plan name to title on layout
+     */
+    @ViewById(R.id.exercisesTitle)
+    void setPlanNameToTitle(TextView title) {
+        title.setText(planName);
+    }
+
+    /**
+     * Sets plan date to title on layout
+     */
+    @ViewById(R.id.exercisesDate)
+    void setPlanDateToTitle(TextView dateTv) {
+        dateTv.setText(date);
     }
 }

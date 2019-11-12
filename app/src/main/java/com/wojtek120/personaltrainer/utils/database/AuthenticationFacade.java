@@ -21,13 +21,14 @@ public class AuthenticationFacade {
 
     /**
      * Check if the user is currently signed in
+     *
      * @return - true if user is logged, otherwise false
      */
     public static boolean isSignedIn() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        if (currentUser == null ) {
+        if (currentUser == null) {
             Log.d(TAG, "user isn't logged in");
             return false;
         } else {
@@ -38,9 +39,10 @@ public class AuthenticationFacade {
 
     /**
      * Authenticate user and redirect to main page if success
-     * @param email - e-mail address
-     * @param password - user password
-     * @param activity - activity
+     *
+     * @param email       - e-mail address
+     * @param password    - user password
+     * @param activity    - activity
      * @param progressBar - progress bar to hide when authentication is completed
      */
     public static void authenticateAndRedirectOnSuccess(String email, String password, Activity activity, ProgressBar progressBar) {
@@ -53,7 +55,7 @@ public class AuthenticationFacade {
 
                         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        if(isEmailVerified()) {
+                        if (isEmailVerified()) {
 
                             Log.d(TAG, "sign in success");
                             redirectToMainActivity(activity);
@@ -81,6 +83,7 @@ public class AuthenticationFacade {
 
     /**
      * Get current user
+     *
      * @return current user or null if isn't logged
      */
     public static FirebaseUser getCurrentUser() {
@@ -88,9 +91,9 @@ public class AuthenticationFacade {
     }
 
 
-
     /**
      * Get current user id
+     *
      * @return current user id or null if isn't logged
      */
     public static String getIdOfCurrentUser() {
@@ -99,6 +102,7 @@ public class AuthenticationFacade {
 
     /**
      * Get current user email
+     *
      * @return current user email or null if isn't logged
      */
     public static String getEmailOfCurrentUser() {
@@ -107,11 +111,12 @@ public class AuthenticationFacade {
 
     /**
      * Check if e-mail is verified
+     *
      * @return true if e-mail is verified else false
      */
     public static boolean isEmailVerified() {
 
-        if(getCurrentUser() == null) {
+        if (getCurrentUser() == null) {
             return false;
         }
 
@@ -121,10 +126,11 @@ public class AuthenticationFacade {
 
     /**
      * Redirects to main activity if user is logged in
+     *
      * @param activity - current activity
      */
-    private static void redirectToMainActivity(Activity activity){
-        if(AuthenticationFacade.getCurrentUser() != null) {
+    private static void redirectToMainActivity(Activity activity) {
+        if (AuthenticationFacade.getCurrentUser() != null) {
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
             activity.finish();

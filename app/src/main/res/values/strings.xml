@@ -52,4 +52,13 @@
     <string name="image_changed">Zdjęcie zmienione</string>
     <string name="user_plans">Plany treningowe</string>
     <string name="days_of_plan">Dni treningowe</string>
+    <string name="exercises">Ćwiczenia</string>
+    <string name="date">Data</string>
+    <string name="name">Nazwa</string>
+    <string name="reps">powtórzenia:</string>
+    <string name="sets">serie:</string>
+    <string name="intensity">Intensywność</string>
+    <string name="weight">ciężar:</string>
+    <string name="hash">#</string>
+    <string name="slash">/</string>
 </resources>

@@ -26,6 +26,7 @@
         <activity android:name=".stats.StatsActivity" />
         <activity android:name=".plans.PlansActivity_" />
         <activity android:name=".plans.DaysActivity_" />
+        <activity android:name=".plans.ExercisesActivity_" />
         <activity android:name=".profile.ProfileActivity_" />
         <activity android:name=".profile.ProfileSettingsActivity_" />
         <activity android:name=".authentication.LoginActivity_" android:windowSoftInputMode="stateHidden"/>
