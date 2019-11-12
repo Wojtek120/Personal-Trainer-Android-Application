@@ -61,4 +61,7 @@
     <string name="weight">ciężar:</string>
     <string name="hash">#</string>
     <string name="slash">/</string>
+    <string name="add_new_plan">Dodaj nowy plan</string>
+    <string name="plan_name">Nazwa planu</string>
+    <string name="lack_of_plan_name">Brak nazwy planu</string>
 </resources>

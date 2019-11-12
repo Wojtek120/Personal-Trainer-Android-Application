@@ -1,6 +1,7 @@
 package com.wojtek120.personaltrainer.utils.database;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -77,8 +78,6 @@ public class PlansService {
     }
 
 
-
-
     /**
      * Put data (plan name and id) from documents to arrays
      * Arrays are used to list all plans
@@ -131,6 +130,23 @@ public class PlansService {
         intent.putExtra("planId", idOfPlans.get(position));
         intent.putExtra("planName", userPlans.get(position));
         context.startActivity(intent);
+
+    }
+
+
+    public void addNewPlan(String planName, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        PlanModel planModel = new PlanModel(AuthenticationFacade.getIdOfCurrentUser(), planName);
+
+        String id = database.collection(DatabaseCollectionNames.PLANS).document().getId();
+        database.collection(DatabaseCollectionNames.PLANS).document(id).set(planModel)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+
+                    activity.recreate();
+                });
 
     }
 }
