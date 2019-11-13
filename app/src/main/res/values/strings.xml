@@ -64,4 +64,7 @@
     <string name="add_new_plan">Dodaj nowy plan</string>
     <string name="plan_name">Nazwa planu</string>
     <string name="lack_of_plan_name">Brak nazwy planu</string>
+    <string name="add_new_day">Dodaj nowy dzień treningowy</string>
+    <string name="day_description">Opis dnia</string>
+    <string name="wrong_date_format">Zły format daty</string>
 </resources>

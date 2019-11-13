@@ -10,17 +10,18 @@
         android:layout_height="match_parent"
         android:id="@+id/plansLayout1">
 
-        <!--        <RelativeLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:id="@+id/profileSettingsLayout2">-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header">
 
-        <!--            <include layout="@layout/header_profile_settings"/>-->
+                    <include layout="@layout/header_days"/>
 
-        <!--        </RelativeLayout>-->
+                </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/plansLayout3"
+            android:layout_below="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="52dp">

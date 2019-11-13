@@ -1,5 +1,6 @@
 package com.wojtek120.personaltrainer.utils.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@EBean
+@EBean(scope = EBean.Scope.Singleton)
 public class DaysService {
 
 
@@ -148,4 +149,28 @@ public class DaysService {
         context.startActivity(intent);
     }
 
+
+    /**
+     * Add new day to database
+     *
+     * @param day         - day model to add
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void addNewDay(DayModel day, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        String id = database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document().getId();
+
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS).document(id).set(day)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+
+                    activity.recreate();
+                });
+
+    }
 }
