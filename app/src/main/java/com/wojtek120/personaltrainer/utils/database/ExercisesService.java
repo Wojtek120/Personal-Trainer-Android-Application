@@ -1,6 +1,7 @@
 package com.wojtek120.personaltrainer.utils.database;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -38,13 +39,11 @@ public class ExercisesService {
     private String dayId;
 
     private FirebaseFirestore database;
-    private Query query;
 
     @AfterInject
     void setUserPlansService() {
         Log.d(TAG, ":: initialize");
         database = FirebaseFirestore.getInstance();
-        query = database.collection(DatabaseCollectionNames.PLANS).whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser());
     }
 
 
@@ -53,6 +52,7 @@ public class ExercisesService {
         Log.d(TAG, "setting ListView in user plans");
 
         this.planId = planId;
+        this.dayId = dayId;
 
         CollectionReference exercisesCollectionReference = database.collection(DatabaseCollectionNames.PLANS).document(planId)
                 .collection(DatabaseCollectionNames.DAYS).document(dayId)
@@ -129,6 +129,96 @@ public class ExercisesService {
 
         Log.d(TAG, "Selected " + exercise.getExerciseId());
 
+
+    }
+
+    /**
+     * Add new exercise
+     *
+     * @param exercise - exercise model to add
+     */
+    public void addNewExercise(ExerciseModel exercise, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        CollectionReference exercisesCollectionReference = database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .collection(DatabaseCollectionNames.EXERCISES);
+        Query query = exercisesCollectionReference.orderBy("order", Query.Direction.DESCENDING).limit(1);
+
+        query.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        int newExerciseOrder = getOrderNumber(task.getResult());
+
+                        Log.d(TAG, "New exercise order: " + newExerciseOrder);
+
+                        exercise.setOrder(newExerciseOrder);
+
+                        putNewExerciseToDatabase(exercise, progressBar, activity);
+
+
+                    } else {
+                        ToastMessage.showMessage(context, context.getString(R.string.something_went_wrong));
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+
+
+    }
+
+    /**
+     * Put new exercise to database
+     *
+     * @param exercise    - exercise model
+     * @param progressBar - progress bar to hide
+     * @param activity    - activity
+     */
+    private void putNewExerciseToDatabase(ExerciseModel exercise, ProgressBar progressBar, Activity activity) {
+
+        String id = database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .collection(DatabaseCollectionNames.EXERCISES).document().getId();
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .collection(DatabaseCollectionNames.EXERCISES).document(id).set(exercise)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+
+                    activity.recreate();
+                });
+
+
+    }
+
+
+    /**
+     * If there is any exercise from query returns its order + 1
+     * it's new exercise order
+     *
+     * @param documents - document from query
+     * @return new exercise order
+     */
+    private int getOrderNumber(QuerySnapshot documents) {
+
+        Log.d(TAG, "Looking for last order number");
+
+        if (documents.isEmpty()) {
+            return 1;
+        }
+
+        ExerciseModel exercise = new ExerciseModel();
+
+        for (QueryDocumentSnapshot document : documents) {
+
+            Log.d(TAG, document.getId() + " => " + document.getData());
+
+            exercise = document.toObject(ExerciseModel.class);
+        }
+
+        return exercise.getOrder() + 1;
 
     }
 }

@@ -10,20 +10,21 @@
         android:layout_height="match_parent"
         android:id="@+id/plansLayout1">
 
-        <!--        <RelativeLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:id="@+id/profileSettingsLayout2">-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativeLayoutEx1">
 
-        <!--            <include layout="@layout/header_profile_settings"/>-->
+                    <include layout="@layout/header_exercises"/>
 
-        <!--        </RelativeLayout>-->
+                </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/plansLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="52dp">
+            android:layout_marginBottom="52dp"
+            android:layout_below="@+id/relativeLayoutEx1">
 
             <include layout="@layout/layout_exercises_center"/>
 

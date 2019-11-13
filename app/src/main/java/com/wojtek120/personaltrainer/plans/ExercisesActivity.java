@@ -9,18 +9,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.dialog.NewExerciseDialog;
+import com.wojtek120.personaltrainer.dialog.NewExerciseDialog_;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
+import com.wojtek120.personaltrainer.model.ExerciseModel;
 import com.wojtek120.personaltrainer.utils.database.ExercisesService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_exercises)
-public class ExercisesActivity extends AppCompatActivity {
+public class ExercisesActivity extends AppCompatActivity implements NewExerciseDialog.OnConfirmAddExerciseListener {
     private final static String TAG = "ExercisesActivity";
 
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PLANS_ACTIVITY;
@@ -85,5 +89,35 @@ public class ExercisesActivity extends AppCompatActivity {
     @ViewById(R.id.exercisesDate)
     void setPlanDateToTitle(TextView dateTv) {
         dateTv.setText(date);
+    }
+
+
+    /**
+     * Back icon - finishes activity
+     */
+    @Click(R.id.backIcon)
+    void backToPlans() {
+        finish();
+    }
+
+
+    /**
+     * Call dialog box to add new exercise.
+     * This dialog calls callback function to add plan
+     */
+    @Click(R.id.addIcon)
+    void addDay() {
+
+        NewExerciseDialog_ newExerciseDialog = new NewExerciseDialog_();
+        newExerciseDialog.show(getSupportFragmentManager(), NewExerciseDialog.TAG);
+
+    }
+
+
+    @Override
+    public void onConfirmAddExercise(ExerciseModel exercise) {
+        Log.d(TAG, "Adding " + exercise.toString());
+
+        exercisesService.addNewExercise(exercise, progressBar, this);
     }
 }
