@@ -48,7 +48,8 @@ public class PlansService {
     void setUserPlansService() {
         Log.d(TAG, ":: initialize");
         database = FirebaseFirestore.getInstance();
-        query = database.collection(DatabaseCollectionNames.PLANS).whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser());
+        query = database.collection(DatabaseCollectionNames.PLANS).whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser()).orderBy("created", Query.Direction.DESCENDING);
+//                .whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser());
     }
 
 
@@ -78,6 +79,7 @@ public class PlansService {
                     progressBar.setVisibility(View.GONE);
                 })
                 .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error " + e.toString());
                     ToastMessage.showMessage(context, context.getString(R.string.something_went_wrong));
                     progressBar.setVisibility(View.GONE);
                 });
