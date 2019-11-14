@@ -49,7 +49,6 @@ public class PlansService {
         Log.d(TAG, ":: initialize");
         database = FirebaseFirestore.getInstance();
         query = database.collection(DatabaseCollectionNames.PLANS).whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser()).orderBy("created", Query.Direction.DESCENDING);
-//                .whereEqualTo(USER_ID_FIELD, AuthenticationFacade.getIdOfCurrentUser());
     }
 
 
@@ -168,6 +167,13 @@ public class PlansService {
     }
 
 
+    /**
+     * Add new plan to db
+     *
+     * @param planName    - name of plan
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
     public void addNewPlan(String planName, ProgressBar progressBar, Activity activity) {
 
         progressBar.setVisibility(View.VISIBLE);
