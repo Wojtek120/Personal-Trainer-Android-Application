@@ -107,4 +107,5 @@
     <string name="edit">Edytuj</string>
     <string name="what_do_you_want_to_do">Co chcesz zrobić?</string>
     <string name="delete">Usuń</string>
+    <string name="deleted">Usunięto</string>
 </resources>

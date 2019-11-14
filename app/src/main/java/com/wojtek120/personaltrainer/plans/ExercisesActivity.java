@@ -150,6 +150,9 @@ public class ExercisesActivity extends AppCompatActivity implements ExerciseDial
 
     @Override
     public void onDeleteExercise(String exerciseId) {
+        Log.d(TAG, "onDeleteExercise " + exerciseId);
+
+        exercisesService.deleteExercise(exerciseId, progressBar, this);
 
     }
 }

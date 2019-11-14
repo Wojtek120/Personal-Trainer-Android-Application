@@ -272,4 +272,32 @@ public class ExercisesService {
                 });
 
     }
+
+    /**
+     * Delete exercise with given id
+     *
+     * @param exerciseId  - id of exercise to delete
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void deleteExercise(String exerciseId, ProgressBar progressBar, Activity activity) {
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .collection(DatabaseCollectionNames.EXERCISES).document(exerciseId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Exercise deleted");
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.deleted));
+                    progressBar.setVisibility(View.GONE);
+                    activity.recreate();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error deleting document", e);
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.something_went_wrong));
+                    progressBar.setVisibility(View.GONE);
+                });
+    }
 }

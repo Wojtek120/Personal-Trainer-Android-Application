@@ -236,4 +236,32 @@ public class DaysService {
                 });
 
     }
+
+
+    /**
+     * Delete day with given id
+     *
+     * @param dayId      - id of day to delete
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void deleteDay(String dayId, ProgressBar progressBar, Activity activity) {
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Day deleted");
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.deleted));
+                    progressBar.setVisibility(View.GONE);
+                    activity.recreate();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error deleting document", e);
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.something_went_wrong));
+                    progressBar.setVisibility(View.GONE);
+                });
+    }
 }

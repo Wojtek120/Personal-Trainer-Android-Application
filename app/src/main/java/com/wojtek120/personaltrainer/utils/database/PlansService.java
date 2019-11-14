@@ -199,4 +199,31 @@ public class PlansService {
                     activity.recreate();
                 });
     }
+
+    /**
+     * Delete plan with given id
+     *
+     * @param planId      - id of plan to delete
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void deletePlan(String planId, ProgressBar progressBar, Activity activity) {
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Plan deleted");
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.deleted));
+                    progressBar.setVisibility(View.GONE);
+                    activity.recreate();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error deleting document", e);
+
+                    ToastMessage.showMessage(activity, activity.getString(R.string.something_went_wrong));
+                    progressBar.setVisibility(View.GONE);
+                });
+
+    }
 }

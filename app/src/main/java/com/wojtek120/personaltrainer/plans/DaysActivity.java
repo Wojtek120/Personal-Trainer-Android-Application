@@ -141,6 +141,8 @@ public class DaysActivity extends AppCompatActivity implements DayDialog.OnConfi
 
     @Override
     public void onDeleteDay(String dayId) {
+        Log.d(TAG, "onDeleteDay " + dayId);
 
+        daysService.deleteDay(dayId, progressBar, this);
     }
 }

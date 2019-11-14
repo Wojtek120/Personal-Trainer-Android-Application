@@ -117,5 +117,7 @@ public class PlansActivity extends AppCompatActivity implements PlanDialog.OnCon
     @Override
     public void onDeletePlan(String planId) {
         Log.d(TAG, "onDeleteDay " + planId);
+
+        plansService.deletePlan(planId, progressBar, this);
     }
 }
