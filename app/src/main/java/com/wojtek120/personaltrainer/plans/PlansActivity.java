@@ -1,5 +1,6 @@
 package com.wojtek120.personaltrainer.plans;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -8,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.dialog.NewPlanDialog;
-import com.wojtek120.personaltrainer.dialog.NewPlanDialog_;
+import com.wojtek120.personaltrainer.dialog.LongClickPlanDialog;
+import com.wojtek120.personaltrainer.dialog.PlanDialog;
+import com.wojtek120.personaltrainer.dialog.PlanDialog_;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
+import com.wojtek120.personaltrainer.model.PlanModel;
 import com.wojtek120.personaltrainer.utils.database.PlansService;
 
 import org.androidannotations.annotations.AfterViews;
@@ -24,7 +27,7 @@ import org.androidannotations.annotations.ViewById;
  * Activity with all training programs
  */
 @EActivity(R.layout.activity_plans)
-public class PlansActivity extends AppCompatActivity implements NewPlanDialog.OnConfirmAddPlanListener {
+public class PlansActivity extends AppCompatActivity implements PlanDialog.OnConfirmAddEditPlanListener, LongClickPlanDialog.OnLongClickPlanListener {
     private final static String TAG = "PlansActivity";
 
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PLANS_ACTIVITY;
@@ -51,7 +54,7 @@ public class PlansActivity extends AppCompatActivity implements NewPlanDialog.On
     private void addPlansToListView() {
         Log.d(TAG, "adding plans to ListView");
 
-        plansService.setListViewWithUserPlans(listView, progressBar);
+        plansService.setListViewWithUserPlans(listView, progressBar, this);
 
     }
 
@@ -72,8 +75,8 @@ public class PlansActivity extends AppCompatActivity implements NewPlanDialog.On
     @Click(R.id.addIcon)
     void addPlan() {
 
-        NewPlanDialog_ newPlanDialog = new NewPlanDialog_();
-        newPlanDialog.show(getSupportFragmentManager(), NewPlanDialog.TAG);
+        PlanDialog_ newPlanDialog = new PlanDialog_();
+        newPlanDialog.show(getSupportFragmentManager(), PlanDialog.TAG);
 
     }
 
@@ -85,5 +88,34 @@ public class PlansActivity extends AppCompatActivity implements NewPlanDialog.On
     @Override
     public void onConfirmAddPlan(String planName) {
         plansService.addNewPlan(planName, progressBar, this);
+    }
+
+    @Override
+    public void onConfirmEditPlan(PlanModel plan, String planId) {
+        Log.d(TAG, "Saving edited plan " + plan.toString());
+        plansService.updatePlan(plan, planId, progressBar, this);
+    }
+
+    /**
+     * Called from long click dialog
+     *
+     * @param plan - model with clicked data
+     */
+    @Override
+    public void onEditPlan(PlanModel plan, String planId) {
+        Log.d(TAG, "onEditDay " + plan.toString());
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("plan", plan);
+        arguments.putString("planId", planId);
+
+        PlanDialog_ newPlanDialog = new PlanDialog_();
+        newPlanDialog.setArguments(arguments);
+        newPlanDialog.show(getSupportFragmentManager(), PlanDialog.TAG);
+    }
+
+    @Override
+    public void onDeletePlan(String planId) {
+        Log.d(TAG, "onDeleteDay " + planId);
     }
 }

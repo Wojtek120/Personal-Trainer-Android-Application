@@ -1,6 +1,7 @@
 package com.wojtek120.personaltrainer.model;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -16,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor @NoArgsConstructor
 @ToString
 @Builder
-public class DayModel {
+public class DayModel implements Serializable {
 
     private Date date;
     private String description;

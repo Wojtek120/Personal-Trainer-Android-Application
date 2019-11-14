@@ -1,5 +1,6 @@
 package com.wojtek120.personaltrainer.plans;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -9,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.dialog.NewDayDialog;
-import com.wojtek120.personaltrainer.dialog.NewDayDialog_;
+import com.wojtek120.personaltrainer.dialog.DayDialog;
+import com.wojtek120.personaltrainer.dialog.DayDialog_;
+import com.wojtek120.personaltrainer.dialog.LongClickDayDialog;
+import com.wojtek120.personaltrainer.dialog.PlanDialog;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.model.DayModel;
@@ -24,7 +27,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_days)
-public class DaysActivity extends AppCompatActivity implements NewDayDialog.OnConfirmAddDayListener {
+public class DaysActivity extends AppCompatActivity implements DayDialog.OnConfirmAddEditDayListener, LongClickDayDialog.OnLongClickDayListener {
     private final static String TAG = "DaysActivity";
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PLANS_ACTIVITY;
 
@@ -55,7 +58,7 @@ public class DaysActivity extends AppCompatActivity implements NewDayDialog.OnCo
     private void addDaysToListView() {
         Log.d(TAG, "adding plans to ListView");
 
-        daysService.setListViewWithDaysOfSelectedPlan(listView, planId, progressBar);
+        daysService.setListViewWithDaysOfSelectedPlan(listView, planId, progressBar, this);
 
     }
 
@@ -92,8 +95,8 @@ public class DaysActivity extends AppCompatActivity implements NewDayDialog.OnCo
     @Click(R.id.addIcon)
     void addDay() {
 
-        NewDayDialog_ newDayDialog = new NewDayDialog_();
-        newDayDialog.show(getSupportFragmentManager(), NewDayDialog.TAG);
+        DayDialog_ newDayDialog = new DayDialog_();
+        newDayDialog.show(getSupportFragmentManager(), DayDialog.TAG);
 
     }
 
@@ -107,5 +110,37 @@ public class DaysActivity extends AppCompatActivity implements NewDayDialog.OnCo
         Log.d(TAG, "Adding " + day.toString());
 
         daysService.addNewDay(day, progressBar, this);
+    }
+
+
+    /**
+     * Callback function from dialog box
+     *
+     * @param day - model with new day data
+     * @param dayId - edited day id
+     */
+    @Override
+    public void onConfirmEditDay(DayModel day, String dayId) {
+        Log.d(TAG, "Saving edited day " + day.toString());
+        daysService.updateDay(day, dayId, progressBar, this);
+    }
+
+
+    @Override
+    public void onEditDay(DayModel day, String dayId) {
+        Log.d(TAG, "calling dialog to edit day " + day.toString());
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("day", day);
+        arguments.putString("dayId", dayId);
+
+        DayDialog_ newDayDialog = new DayDialog_();
+        newDayDialog.setArguments(arguments);
+        newDayDialog.show(getSupportFragmentManager(), PlanDialog.TAG);
+    }
+
+    @Override
+    public void onDeleteDay(String dayId) {
+
     }
 }

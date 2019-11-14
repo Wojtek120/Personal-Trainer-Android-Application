@@ -4,23 +4,27 @@ package com.wojtek120.personaltrainer.utils.database;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.dialog.LongClickPlanDialog;
+import com.wojtek120.personaltrainer.dialog.LongClickPlanDialog_;
 import com.wojtek120.personaltrainer.model.PlanModel;
 import com.wojtek120.personaltrainer.plans.DaysActivity_;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +35,11 @@ public class PlansService {
     private static final String TAG = "PlansService";
     private static final String USER_ID_FIELD = "userId";
 
-    @RootContext
-    Context context;
+    private Context context;
 
     private ArrayList<String> idOfPlans;
     private ArrayList<String> userPlans;
+    private ArrayList<PlanModel> planModels;
 
     private FirebaseFirestore database;
     private Query query;
@@ -53,12 +57,15 @@ public class PlansService {
      *
      * @param listView - ListView to fill with plans
      */
-    public void setListViewWithUserPlans(ListView listView, ProgressBar progressBar) {
+    public void setListViewWithUserPlans(ListView listView, ProgressBar progressBar, Context context) {
+
+        this.context = context;
 
         Log.d(TAG, "setting ListView in user plans");
 
         idOfPlans = new ArrayList<>();
         userPlans = new ArrayList<>();
+        planModels = new ArrayList<>();
 
         query.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -95,6 +102,7 @@ public class PlansService {
             userPlans.add(plan.getName());
             idOfPlans.add(document.getId());
 
+            planModels.add(plan);
         }
 
     }
@@ -113,8 +121,32 @@ public class PlansService {
                 android.R.layout.simple_expandable_list_item_1,
                 userPlans);
         listView.setAdapter(arrayAdapter);
+
         listView.setOnItemClickListener((parent, view, position, id) -> navigateToDaysOfSelectedPlan(position));
 
+        listView.setOnItemLongClickListener((adapterView, view, position, l) -> {
+            onItemLongClicked(position);
+            return true;
+        });
+    }
+
+
+    /**
+     * Runs dialog when on long item clicked
+     *
+     * @param position - position of clicked item
+     */
+    private void onItemLongClicked(int position) {
+
+        LongClickPlanDialog_ longClickPlanDialog = new LongClickPlanDialog_();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("plan", planModels.get(position));
+        bundle.putString("planId", idOfPlans.get(position));
+        longClickPlanDialog.setArguments(bundle);
+
+
+        longClickPlanDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), LongClickPlanDialog.TAG);
     }
 
 
@@ -148,5 +180,23 @@ public class PlansService {
                     activity.recreate();
                 });
 
+    }
+
+
+    /**
+     * Save edited plan
+     *
+     * @param plan
+     * @param progressBar
+     */
+    public void updatePlan(PlanModel plan, String planId, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId).set(plan)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+                    activity.recreate();
+                });
     }
 }

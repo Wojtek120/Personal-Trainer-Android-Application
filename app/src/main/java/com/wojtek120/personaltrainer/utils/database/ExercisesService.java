@@ -3,10 +3,13 @@ package com.wojtek120.personaltrainer.utils.database;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -14,13 +17,14 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.dialog.LongClickExerciseDialog;
+import com.wojtek120.personaltrainer.dialog.LongClickExerciseDialog_;
 import com.wojtek120.personaltrainer.model.ExerciseModel;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
 import com.wojtek120.personaltrainer.utils.adapter.ExercisesAdapter;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 
@@ -30,10 +34,10 @@ public class ExercisesService {
     private static final String TAG = "ExercisesService";
     private static final String USER_ID_FIELD = "userId";
 
-    @RootContext
-    Context context;
+    private Context context;
 
     private ArrayList<ExerciseModel> exercises;
+    private ArrayList<String> exercisesId;
 
     private String planId;
     private String dayId;
@@ -47,10 +51,11 @@ public class ExercisesService {
     }
 
 
-    public void setListViewWithExercises(ListView listView, String planId, String dayId, ProgressBar progressBar) {
+    public void setListViewWithExercises(ListView listView, String planId, String dayId, ProgressBar progressBar, Context context) {
 
         Log.d(TAG, "setting ListView in user plans");
 
+        this.context = context;
         this.planId = planId;
         this.dayId = dayId;
 
@@ -60,6 +65,7 @@ public class ExercisesService {
         Query query = exercisesCollectionReference.orderBy("order");
 
         exercises = new ArrayList<>();
+        exercisesId = new ArrayList<>();
 
         query.get()
                 .addOnCompleteListener(task -> {
@@ -91,11 +97,12 @@ public class ExercisesService {
 
         for (QueryDocumentSnapshot document : documents) {
 
-            Log.d(TAG, document.getId() + " => " + document.getData());
-
             ExerciseModel exercise = document.toObject(ExerciseModel.class);
-            exercise.setExerciseId(document.getId());
+
+            Log.d(TAG, "Found exercise" + document.getId() + " => " + exercise.toString());
+
             exercises.add(exercise);
+            exercisesId.add(document.getId());
 
         }
 
@@ -115,6 +122,27 @@ public class ExercisesService {
 
         listView.setOnItemClickListener((parent, view, position, id) -> navigateToSelectedExerciseDetails(position));
 
+        listView.setOnItemLongClickListener((adapterView, view, position, l) -> {
+            onItemLongClicked(position);
+            return true;
+        });
+    }
+
+
+    /**
+     * Runs dialog when on long item clicked
+     *
+     * @param position - position of clicked item
+     */
+    private void onItemLongClicked(int position) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("exercise", exercises.get(position));
+        bundle.putString("exerciseId", exercisesId.get(position));
+
+        LongClickExerciseDialog_ longClickExerciseDialog = new LongClickExerciseDialog_();
+        longClickExerciseDialog.setArguments(bundle);
+        longClickExerciseDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), LongClickExerciseDialog.TAG);
     }
 
 
@@ -127,7 +155,7 @@ public class ExercisesService {
 
         ExerciseModel exercise = exercises.get(position);
 
-        Log.d(TAG, "Selected " + exercise.getExerciseId());
+        Log.d(TAG, "Selected " + exercisesId.get(position));
 
 
     }
@@ -219,6 +247,29 @@ public class ExercisesService {
         }
 
         return exercise.getOrder() + 1;
+
+    }
+
+    /**
+     * Update edited exercise
+     *
+     * @param exercise    - model with new data
+     * @param exerciseId  - edited exercise id
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void updateExercise(ExerciseModel exercise, String exerciseId, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId)
+                .collection(DatabaseCollectionNames.DAYS).document(dayId)
+                .collection(DatabaseCollectionNames.EXERCISES).document(exerciseId)
+                .set(exercise)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+                    activity.recreate();
+                });
 
     }
 }

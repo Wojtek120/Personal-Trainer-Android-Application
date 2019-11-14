@@ -2,6 +2,7 @@ package com.wojtek120.personaltrainer.dialog;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.model.DayModel;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.Touch;
@@ -27,10 +29,10 @@ import java.util.Date;
 import java.util.Locale;
 
 
-@EFragment(R.layout.dialog_add_day)
-public class NewDayDialog extends DialogFragment {
+@EFragment(R.layout.dialog_day)
+public class DayDialog extends DialogFragment {
 
-    public static final String TAG = "NewDayDialog";
+    public static final String TAG = "DayDialog";
 
     private Context context = getActivity();
 
@@ -39,11 +41,37 @@ public class NewDayDialog extends DialogFragment {
     @ViewById
     EditText dateEt;
 
-    OnConfirmAddDayListener onConfirmAddDayListener;
+    private DayModel day = null;
+    private String dayId;
 
-    public interface OnConfirmAddDayListener {
+    OnConfirmAddEditDayListener onConfirmAddEditDayListener;
+
+    public interface OnConfirmAddEditDayListener {
         void onConfirmAddDay(DayModel day);
+        void onConfirmEditDay(DayModel day, String dayId);
     }
+
+    @AfterViews
+    void setUpDayDialog() {
+        handleArguments();
+    }
+
+    /**
+     * Fill EditTexts if argument is set
+     */
+    private void handleArguments() {
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            day = (DayModel) getArguments().getSerializable("day");
+            dayId = getArguments().getString("dayId");
+
+            dayDescriptionEt.setText(day.getDescription());
+            dateEt.setText(day.getDateString());
+        }
+
+    }
+
 
     @Click(R.id.confirmButtonDialog)
     void onClickListenerToConfirmButton() {
@@ -55,10 +83,10 @@ public class NewDayDialog extends DialogFragment {
 
             Date date = getDateFromString(dateStr);
 
-            DayModel day = new DayModel(date, dayDescription);
+            DayModel newDay = new DayModel(date, dayDescription);
 
-            onConfirmAddDayListener.onConfirmAddDay(day);
-            getDialog().dismiss();
+            handleCallbackFunctions(newDay);
+
         } else {
             String errorMessage = getContext().getString(R.string.fill_all_fields);
             ToastMessage.showMessage(getActivity(), errorMessage);
@@ -66,6 +94,36 @@ public class NewDayDialog extends DialogFragment {
 
     }
 
+    /**
+     * Call proper callback function
+     */
+    private void handleCallbackFunctions(DayModel newDay) {
+
+        if (checkIfAddingNewDay()) {
+            onConfirmAddEditDayListener.onConfirmAddDay(newDay);
+        } else {
+            onConfirmAddEditDayListener.onConfirmEditDay(newDay, dayId);
+        }
+
+        getDialog().dismiss();
+    }
+
+    /**
+     * Plan isn't null only if plan is edited
+     *
+     * @return true if dialog is responsible for adding new plan
+     */
+    private boolean checkIfAddingNewDay() {
+        return day == null;
+    }
+
+
+    /**
+     * Get Date from String with date text in format dd.MM.yyyy
+     *
+     * @param dateStr - date text in format dd.MM.yyyy
+     * @return Date
+     */
     private Date getDateFromString(String dateStr) {
 
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
@@ -82,6 +140,13 @@ public class NewDayDialog extends DialogFragment {
         return date;
     }
 
+
+    /**
+     * Calls pick up date dialog when EditText with date is touched
+     *
+     * @param v
+     * @param motionEvent
+     */
     @Touch(R.id.dateEt)
     void selectDate(View v, MotionEvent motionEvent) {
         Log.d(TAG, ":: date clicked");
@@ -110,7 +175,7 @@ public class NewDayDialog extends DialogFragment {
         Log.d(TAG, ":: onAttach started");
 
         try {
-            onConfirmAddDayListener = (OnConfirmAddDayListener) context;
+            onConfirmAddEditDayListener = (OnConfirmAddEditDayListener) context;
         } catch (ClassCastException e) {
             Log.e(TAG, ":: onAttach" + e.getMessage());
         }

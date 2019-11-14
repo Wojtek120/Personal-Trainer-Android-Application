@@ -28,6 +28,7 @@ public class StartUp extends Application {
 
         if (AuthenticationFacade.getCurrentUser() == null || !AuthenticationFacade.isSignedIn() || !AuthenticationFacade.isEmailVerified()) {
             Intent intent = new Intent(this, LoginActivity_.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
 

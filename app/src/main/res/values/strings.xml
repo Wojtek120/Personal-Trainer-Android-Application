@@ -104,4 +104,7 @@
     <string name="reps_hint">Powtórzenia</string>
     <string name="sets_hint">Serie</string>
     <string name="intensity_hint">Intensywność</string>
+    <string name="edit">Edytuj</string>
+    <string name="what_do_you_want_to_do">Co chcesz zrobić?</string>
+    <string name="delete">Usuń</string>
 </resources>

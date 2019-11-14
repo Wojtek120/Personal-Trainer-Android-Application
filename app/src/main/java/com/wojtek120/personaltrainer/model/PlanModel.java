@@ -1,5 +1,7 @@
 package com.wojtek120.personaltrainer.model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor @NoArgsConstructor
 @ToString
 @Builder
-public class PlanModel {
+public class PlanModel implements Serializable {
 
     private String userId;
     private String name;

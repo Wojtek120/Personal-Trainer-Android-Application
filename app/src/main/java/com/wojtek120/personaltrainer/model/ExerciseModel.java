@@ -1,6 +1,8 @@
 package com.wojtek120.personaltrainer.model;
 
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor @NoArgsConstructor
 @ToString
 @Builder
-public class ExerciseModel {
+public class ExerciseModel implements Serializable {
 
-    private String exerciseId;
     private String name;
     private int order;
     private String intensity;

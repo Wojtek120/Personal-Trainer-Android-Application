@@ -3,24 +3,31 @@ package com.wojtek120.personaltrainer.utils.database;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wojtek120.personaltrainer.R;
+import com.wojtek120.personaltrainer.dialog.LongClickDayDialog_;
+import com.wojtek120.personaltrainer.dialog.LongClickPlanDialog;
 import com.wojtek120.personaltrainer.model.DayModel;
 import com.wojtek120.personaltrainer.plans.ExercisesActivity_;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +40,10 @@ public class DaysService {
 
     private static final String TAG = "DaysService";
 
-    @RootContext
-    Context context;
-
+    private Context context;
 
     private List<Map<String, String>> userDays;
+    private ArrayList<DayModel> days;
     private ArrayList<String> idOfDays;
 
     private FirebaseFirestore database;
@@ -57,14 +63,16 @@ public class DaysService {
      *
      * @param listView - ListView to fill with plans
      */
-    public void setListViewWithDaysOfSelectedPlan(ListView listView, String planId, ProgressBar progressBar) {
+    public void setListViewWithDaysOfSelectedPlan(ListView listView, String planId, ProgressBar progressBar, Context context) {
 
         Log.d(TAG, "setting ListView in user plans");
 
+        this.context = context;
         this.planId = planId;
 
         idOfDays = new ArrayList<>();
         userDays = new ArrayList<>();
+        days = new ArrayList<>();
 
         CollectionReference daysCollectionReference = database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS);
 
@@ -107,6 +115,7 @@ public class DaysService {
             userDays.add(dayMap);
 
             idOfDays.add(document.getId());
+            days.add(day);
 
         }
 
@@ -125,10 +134,43 @@ public class DaysService {
                 android.R.layout.simple_list_item_2,
                 new String[]{"title", "subtitle"},
                 new int[]{android.R.id.text1,
-                        android.R.id.text2});
+                        android.R.id.text2}){
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = view.findViewById(android.R.id.text1);
+                text1.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
+
+
+
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener((parent, view, position, id) -> navigateToSelectedDayActivity(position));
 
+        listView.setOnItemLongClickListener((adapterView, view, position, l) -> {
+            onItemLongClicked(position);
+            return true;
+        });
+
+    }
+
+    /**
+     * Runs dialog when on long item clicked
+     *
+     * @param position - position of clicked item
+     */
+    private void onItemLongClicked(int position) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("day", days.get(position));
+        bundle.putString("dayId", idOfDays.get(position));
+
+        LongClickDayDialog_ longClickDayDialog = new LongClickDayDialog_();
+        longClickDayDialog.setArguments(bundle);
+        longClickDayDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), LongClickPlanDialog.TAG);
     }
 
 
@@ -146,6 +188,7 @@ public class DaysService {
         intent.putExtra("dayId", idOfDays.get(position));
         intent.putExtra("planName", userDays.get(position).get("title"));
         intent.putExtra("date", userDays.get(position).get("subtitle"));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -169,6 +212,26 @@ public class DaysService {
                 .addOnCompleteListener(task -> {
                     progressBar.setVisibility(View.GONE);
 
+                    activity.recreate();
+                });
+
+    }
+
+    /**
+     * Update edited day
+     *
+     * @param day         - day mode to save
+     * @param dayId       - edited day id
+     * @param progressBar - progress bar
+     * @param activity    - activity
+     */
+    public void updateDay(DayModel day, String dayId, ProgressBar progressBar, Activity activity) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS).document(dayId).set(day)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
                     activity.recreate();
                 });
 

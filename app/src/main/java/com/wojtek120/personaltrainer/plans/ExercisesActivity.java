@@ -1,5 +1,6 @@
 package com.wojtek120.personaltrainer.plans;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -9,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.dialog.NewExerciseDialog;
-import com.wojtek120.personaltrainer.dialog.NewExerciseDialog_;
+import com.wojtek120.personaltrainer.dialog.ExerciseDialog;
+import com.wojtek120.personaltrainer.dialog.ExerciseDialog_;
+import com.wojtek120.personaltrainer.dialog.LongClickExerciseDialog;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.model.ExerciseModel;
@@ -24,7 +26,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_exercises)
-public class ExercisesActivity extends AppCompatActivity implements NewExerciseDialog.OnConfirmAddExerciseListener {
+public class ExercisesActivity extends AppCompatActivity implements ExerciseDialog.OnConfirmAddEditExerciseListener, LongClickExerciseDialog.OnLongClickExerciseListener {
     private final static String TAG = "ExercisesActivity";
 
     private static final int ACTIVITY_NUMBER = ActivityNumbers.PLANS_ACTIVITY;
@@ -60,7 +62,7 @@ public class ExercisesActivity extends AppCompatActivity implements NewExerciseD
     private void addPlansToListView() {
         Log.d(TAG, "adding plans to ListView");
 
-        exercisesService.setListViewWithExercises(listView, planId, dayId, progressBar);
+        exercisesService.setListViewWithExercises(listView, planId, dayId, progressBar, this);
 
     }
 
@@ -108,8 +110,8 @@ public class ExercisesActivity extends AppCompatActivity implements NewExerciseD
     @Click(R.id.addIcon)
     void addDay() {
 
-        NewExerciseDialog_ newExerciseDialog = new NewExerciseDialog_();
-        newExerciseDialog.show(getSupportFragmentManager(), NewExerciseDialog.TAG);
+        ExerciseDialog_ newExerciseDialog = new ExerciseDialog_();
+        newExerciseDialog.show(getSupportFragmentManager(), ExerciseDialog.TAG);
 
     }
 
@@ -119,5 +121,35 @@ public class ExercisesActivity extends AppCompatActivity implements NewExerciseD
         Log.d(TAG, "Adding " + exercise.toString());
 
         exercisesService.addNewExercise(exercise, progressBar, this);
+    }
+
+    /**
+     * Callback function from dialog box
+     *
+     * @param exercise - model with new exercise data
+     * @param exerciseId - edited exercise id
+     */
+    @Override
+    public void onConfirmEditExercise(ExerciseModel exercise, String exerciseId) {
+        Log.d(TAG, "Saving edited exercise " + exercise.toString());
+        exercisesService.updateExercise(exercise, exerciseId, progressBar, this);
+    }
+
+    @Override
+    public void onEditExercise(ExerciseModel exercise, String exerciseId) {
+        Log.d(TAG, "calling dialog to exercise day " + exercise.toString());
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("exercise", exercise);
+        arguments.putString("exerciseId", exerciseId);
+
+        ExerciseDialog_ exerciseDialog = new ExerciseDialog_();
+        exerciseDialog.setArguments(arguments);
+        exerciseDialog.show(getSupportFragmentManager(), ExerciseDialog.TAG);
+    }
+
+    @Override
+    public void onDeleteExercise(String exerciseId) {
+
     }
 }
