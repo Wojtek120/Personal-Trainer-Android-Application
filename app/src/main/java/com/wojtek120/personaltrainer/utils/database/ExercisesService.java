@@ -117,7 +117,7 @@ public class ExercisesService {
      */
     private void setExercisesToListView(ListView listView) {
 
-        ExercisesAdapter exercisesAdapter = new ExercisesAdapter(context, exercises);
+        ExercisesAdapter exercisesAdapter = new ExercisesAdapter(context, exercises, planId, dayId, exercisesId);
         listView.setAdapter(exercisesAdapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> navigateToSelectedExerciseDetails(position));

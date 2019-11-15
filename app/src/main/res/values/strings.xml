@@ -108,4 +108,6 @@
     <string name="what_do_you_want_to_do">Co chcesz zrobić?</string>
     <string name="delete">Usuń</string>
     <string name="deleted">Usunięto</string>
+    <string name="set_decrement">Zmniejsz liczbę wykonanych serii</string>
+    <string name="set_done">Zwiększ liczbę wykonanych serii</string>
 </resources>
