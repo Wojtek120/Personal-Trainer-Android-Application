@@ -22,7 +22,7 @@ public class DayModel implements Serializable {
     private Date date;
     private String description;
 
-    public String getDateString() {
+    public String giveDateString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
         return dateFormat.format(date);
     }

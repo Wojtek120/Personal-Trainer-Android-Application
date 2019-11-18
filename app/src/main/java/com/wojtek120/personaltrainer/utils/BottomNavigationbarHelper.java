@@ -13,7 +13,7 @@ import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.home.MainActivity;
 import com.wojtek120.personaltrainer.plans.PlansActivity_;
 import com.wojtek120.personaltrainer.profile.ProfileActivity_;
-import com.wojtek120.personaltrainer.search.SearchActivity;
+import com.wojtek120.personaltrainer.predefined.PredefinedPlansActivity_;
 import com.wojtek120.personaltrainer.stats.StatsActivity;
 
 /**
@@ -63,7 +63,7 @@ public class BottomNavigationbarHelper {
                         break;
 
                     case R.id.iconSearch:
-                        intent = new Intent(context, SearchActivity.class);
+                        intent = new Intent(context, PredefinedPlansActivity_.class);
                         context.startActivity(intent);
                         break;
 

@@ -78,7 +78,7 @@ public class ExerciseDialog extends DialogFragment {
             exerciseSpinner.setSelection(exerciseSpinnerIndex);
             setsEt.setText(Integer.toString(exercise.getSets()));
             repsEt.setText(Integer.toString(exercise.getReps()));
-            intensityEt.setText(exercise.getIntensity());
+            intensityEt.setText(Double.toString(exercise.getIntensity()));
         }
 
     }
@@ -89,12 +89,14 @@ public class ExerciseDialog extends DialogFragment {
         String exercise = exerciseSpinner.getSelectedItem().toString();
         String setsStr = setsEt.getText().toString();
         String repsStr = repsEt.getText().toString();
-        String intensity = intensityEt.getText().toString();
+        String intensityStr = intensityEt.getText().toString();
 
-        if (dataIsValid(exercise, setsStr, repsStr, intensity)) {
+        if (dataIsValid(exercise, setsStr, repsStr, intensityStr)) {
 
             int sets = Integer.parseInt(setsStr);
             int reps = Integer.parseInt(repsStr);
+            double intensity = Double.parseDouble(intensityStr);
+
 
             ExerciseModel exerciseModel = new ExerciseModel(exercise, 0, intensity, reps, sets, 0);
 

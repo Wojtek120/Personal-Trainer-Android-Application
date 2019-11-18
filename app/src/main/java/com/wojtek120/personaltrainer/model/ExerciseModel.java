@@ -18,7 +18,7 @@ public class ExerciseModel implements Serializable {
 
     private String name;
     private int order;
-    private String intensity;
+    private double intensity;
     private int reps;
     private int sets;
     private int setsDone;

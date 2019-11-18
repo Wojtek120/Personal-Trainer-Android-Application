@@ -118,7 +118,7 @@ public class ExercisesAdapter extends ArrayAdapter<ExerciseModel> {
     private void setFieldsWithTextFromModel(ViewHolder viewHolder, ExerciseModel exercise) {
         viewHolder.name.setText(exercise.getName());
         viewHolder.reps.setText(Integer.toString(exercise.getReps()));
-        viewHolder.weight.setText(exercise.getIntensity());
+        viewHolder.weight.setText(Double.toString(exercise.getIntensity()));
         viewHolder.done.setText(Integer.toString(exercise.getSetsDone()));
         viewHolder.sets.setText(Integer.toString(exercise.getSets()));
     }

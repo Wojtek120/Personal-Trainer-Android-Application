@@ -67,7 +67,7 @@ public class DayDialog extends DialogFragment {
             dayId = getArguments().getString("dayId");
 
             dayDescriptionEt.setText(day.getDescription());
-            dateEt.setText(day.getDateString());
+            dateEt.setText(day.giveDateString());
         }
 
     }

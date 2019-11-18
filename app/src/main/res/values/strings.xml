@@ -110,4 +110,24 @@
     <string name="deleted">Usunięto</string>
     <string name="set_decrement">Zmniejsz liczbę wykonanych serii</string>
     <string name="set_done">Zwiększ liczbę wykonanych serii</string>
+    <string name="over_head_press">Wyciskanie żołnierskie</string>
+    <string name="glute_ham_raise">Żuraw</string>
+    <string name="back_extension">Prostowanie na ławce rzymskiej</string>
+    <string name="power_clean">Zarzut na wysoko</string>
+    <string name="clean">Zarzut</string>
+    <string name="power_snatch">Rwanie na wysoko</string>
+    <string name="snatch">Rwanie</string>
+    <string name="plan5_3_1">5/3/1</string>
+    <string name="jim_wendler">autor: Jim Wendler</string>
+    <string name="description_5_3_1">Plan nastawiony na rozwój siły trwający w zależności od liczby dni treningowych (3 lub 4 dni) od 4 do 6 tygodni.</string>
+    <string name="add_to_your_training_diary">Dodaj do swojego dziennika</string>
+    <string name="texas_method">Texas method</string>
+    <string name="description_texas_method">Plan z tygodniową progresją liniową. W ciągu jednego tygodnia zakłada trzy treningi: z wysoką intensywnością, aktywny wypoczynek oraz z wysoką objętością.</string>
+    <string name="mark_rippetoe">autor: Mark Rippetoe</string>
+    <string name="strong_lifts_5_5">Strong Lifts 5x5</string>
+    <string name="bill_starr">autor: Bill Starr</string>
+    <string name="description_strong_lifts_5_5">Plan dla osób początkującyhc zakładający trzy treningi w tygodniu z prostą progresją liniową. Ograniczony do podstawowych ćwiczeń wielostawowych.</string>
+    <string name="select_and_add_plan">Wybierz nowy plan i dodaj do dziennika</string>
+    <string name="add_predefined_plan_title">Czy dodać plan do Twojego dziennika treningowego?</string>
+    <string name="add_predefined_plan_message">Jeśli chcesz dodać plan do swojego dziennika treningowego, naciśnij \"Zatwierdź\" i wybierz datę rozpoczęcia programu.</string>
 </resources>
