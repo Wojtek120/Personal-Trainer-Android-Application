@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wojtek120.personaltrainer.R;
@@ -74,9 +74,9 @@ public class DaysService {
         userDays = new ArrayList<>();
         days = new ArrayList<>();
 
-        CollectionReference daysCollectionReference = database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS);
+        Query query = database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS).orderBy("date");
 
-        daysCollectionReference.get()
+        query.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
 
@@ -111,7 +111,7 @@ public class DaysService {
 
             Map<String, String> dayMap = new HashMap<>(2);
             dayMap.put("title", day.getDescription());
-            dayMap.put("subtitle", day.getDateString());
+            dayMap.put("subtitle", day.giveDateString());
             userDays.add(dayMap);
 
             idOfDays.add(document.getId());
