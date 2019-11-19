@@ -34,6 +34,8 @@ public class PredefinedPlansService {
     private String userPlanId;
     private String planId;
 
+    private Date startDate;
+    private int timeToAdd;
 
     @AfterInject
     void setUserPlansService() {
@@ -46,14 +48,15 @@ public class PredefinedPlansService {
      * Copy plan with @param id to user plans
      *
      * @param documentId  - document id to copy
+     * @param startDate   - date when plan should start
      * @param progressBar - progress bar
      */
-    public void copyPlan(String documentId, ProgressBar progressBar) {
+    public void copyPlan(String documentId, Date startDate, ProgressBar progressBar) {
 
         progressBar.setVisibility(View.VISIBLE);
 
         planId = documentId;
-
+        this.startDate = startDate;
 
         DocumentReference document = database.collection(DatabaseCollectionNames.PREDEFINED_PLANS).document(documentId);
         document.get()
@@ -83,6 +86,9 @@ public class PredefinedPlansService {
         Log.d(TAG, "Got plan " + document.getId() + document.getData());
 
         planModel = document.toObject(PlanModel.class);
+
+        timeToAdd = timeBetween(planModel.getCreated(), startDate);
+
         planModel.setUserId(AuthenticationFacade.getIdOfCurrentUser());
         planModel.setCreated(new Date());
 
@@ -144,6 +150,8 @@ public class PredefinedPlansService {
             Log.d(TAG, "got day " + document.getId() + document.getData());
 
             DayModel dayModel = document.toObject(DayModel.class);
+            dayModel.setDate(addTime(dayModel.getDate(), timeToAdd));
+
             String dayIdInPredefined = document.getId();
             saveOneDay(dayModel, dayIdInPredefined, progressBar);
 
@@ -258,6 +266,30 @@ public class PredefinedPlansService {
                     progressBar.setVisibility(View.GONE);
                 });
 
+    }
+
+
+    /**
+     * Get day from d2 to d1
+     *
+     * @param d1 - first date
+     * @param d2 - second date
+     * @return days between two dates
+     */
+    private int timeBetween(Date d1, Date d2) {
+        return (int) (d2.getTime() - d1.getTime());
+    }
+
+    /**
+     * Add days to date
+     *
+     * @param date - date
+     * @param milis - number of days to add
+     * @return date with added days
+     */
+    private Date addTime(Date date, int milis) {
+
+        return new Date(date.getTime() + milis);
     }
 
 

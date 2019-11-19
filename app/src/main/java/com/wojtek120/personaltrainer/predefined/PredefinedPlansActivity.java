@@ -1,5 +1,6 @@
 package com.wojtek120.personaltrainer.predefined;
 
+import android.app.DatePickerDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -18,6 +19,11 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Activity with predefined plans
@@ -62,12 +68,40 @@ public class PredefinedPlansActivity extends AppCompatActivity {
                 .setMessage(addPlanMessage)
                 .setPositiveButton(confirmStr, (dialogInterface, i) -> {
                     Log.d(TAG, "Adding 531");
-                    predefinedPlansService.copyPlan("neRBR8PoW6KeesQJBv0b", progressBar);
+
+                    pickDateAndCopyPlan("neRBR8PoW6KeesQJBv0b");
+
+
                 })
                 .setNegativeButton(cancelStr, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                 })
                 .show();
+    }
+
+    private void pickDateAndCopyPlan(String documentId) {
+
+        final Calendar cldr = Calendar.getInstance();
+        int day = cldr.get(Calendar.DAY_OF_MONTH);
+        int month = cldr.get(Calendar.MONTH);
+        int year = cldr.get(Calendar.YEAR);
+
+        DatePickerDialog picker = new DatePickerDialog(this,
+                (view, year1, monthOfYear, dayOfMonth) ->
+                {
+                    try {
+
+                        Date date = new SimpleDateFormat("dd.MM.yyyy").parse(dayOfMonth + "." + (monthOfYear + 1) + "." + year1);
+                        Log.d(TAG, "Picked date " + date);
+                        predefinedPlansService.copyPlan(documentId, date, progressBar);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }, year, month, day);
+        picker.show();
+
     }
 
 
@@ -81,7 +115,9 @@ public class PredefinedPlansActivity extends AppCompatActivity {
                 .setMessage(addPlanMessage)
                 .setPositiveButton(confirmStr, (dialogInterface, i) -> {
                     Log.d(TAG, "Adding texas method");
-                    predefinedPlansService.copyPlan("texas_method", progressBar);
+
+                    pickDateAndCopyPlan("texas_method");
+
                 })
                 .setNegativeButton(cancelStr, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
@@ -101,7 +137,7 @@ public class PredefinedPlansActivity extends AppCompatActivity {
                 .setMessage(addPlanMessage)
                 .setPositiveButton(confirmStr, (dialogInterface, i) -> {
                     Log.d(TAG, "Adding dtrong lifts");
-                    predefinedPlansService.copyPlan("lzBbgzUN6dYVu54A8NfQ", progressBar);
+                    pickDateAndCopyPlan("lzBbgzUN6dYVu54A8NfQ");
                 })
                 .setNegativeButton(cancelStr, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
