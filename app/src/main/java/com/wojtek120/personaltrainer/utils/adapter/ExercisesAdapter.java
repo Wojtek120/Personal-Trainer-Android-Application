@@ -28,6 +28,8 @@ public class ExercisesAdapter extends ArrayAdapter<ExerciseModel> {
         TextView weight;
         TextView done;
         TextView sets;
+        TextView intensity;
+        TextView comment;
         ImageView plus;
         ImageView minus;
     }
@@ -118,7 +120,9 @@ public class ExercisesAdapter extends ArrayAdapter<ExerciseModel> {
     private void setFieldsWithTextFromModel(ViewHolder viewHolder, ExerciseModel exercise) {
         viewHolder.name.setText(exercise.getName());
         viewHolder.reps.setText(Integer.toString(exercise.getReps()));
-        viewHolder.weight.setText(Double.toString(exercise.getIntensity()));
+        viewHolder.weight.setText(Double.toString(exercise.getWeight()));
+        viewHolder.intensity.setText(Double.toString(exercise.getIntensity()));
+        viewHolder.comment.setText(exercise.getComment());
         viewHolder.done.setText(Integer.toString(exercise.getSetsDone()));
         viewHolder.sets.setText(Integer.toString(exercise.getSets()));
     }
@@ -127,6 +131,8 @@ public class ExercisesAdapter extends ArrayAdapter<ExerciseModel> {
         viewHolder.name = convertView.findViewById(R.id.nameTv);
         viewHolder.reps = convertView.findViewById(R.id.repsNumber);
         viewHolder.weight = convertView.findViewById(R.id.weightNumber);
+        viewHolder.intensity = convertView.findViewById(R.id.intensityNumber);
+        viewHolder.comment = convertView.findViewById(R.id.commentText);
         viewHolder.done = convertView.findViewById(R.id.doneNumber);
         viewHolder.sets = convertView.findViewById(R.id.setsNumber);
         viewHolder.plus = convertView.findViewById(R.id.incrementDoneSet);

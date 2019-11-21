@@ -40,6 +40,10 @@ public class ExerciseDialog extends DialogFragment {
     EditText repsEt;
     @ViewById
     EditText intensityEt;
+    @ViewById
+    EditText weightEt;
+    @ViewById
+    EditText commentEt;
 
 
     private ExerciseModel exercise = null;
@@ -89,16 +93,19 @@ public class ExerciseDialog extends DialogFragment {
         String exercise = exerciseSpinner.getSelectedItem().toString();
         String setsStr = setsEt.getText().toString();
         String repsStr = repsEt.getText().toString();
+        String weightStr = weightEt.getText().toString();
         String intensityStr = intensityEt.getText().toString();
+        String comment = commentEt.getText().toString();
 
-        if (dataIsValid(exercise, setsStr, repsStr, intensityStr)) {
+        if (dataIsValid(exercise, setsStr, repsStr, intensityStr, comment, weightStr)) {
 
             int sets = Integer.parseInt(setsStr);
             int reps = Integer.parseInt(repsStr);
             double intensity = Double.parseDouble(intensityStr);
+            double weight = Double.parseDouble(weightStr);
 
 
-            ExerciseModel exerciseModel = new ExerciseModel(exercise, 0, intensity, reps, sets, 0);
+            ExerciseModel exerciseModel = new ExerciseModel(exercise, 0, intensity, weight, reps, sets, 0, comment);
 
             handleCallbackFunctions(exerciseModel);
 
@@ -143,9 +150,9 @@ public class ExerciseDialog extends DialogFragment {
      * @param intensity
      * @return true if data is valid
      */
-    private boolean dataIsValid(String exercise, String setsStr, String repsStr, String intensity) {
+    private boolean dataIsValid(String exercise, String setsStr, String repsStr, String intensity, String comment, String weightStr) {
 
-        if (exercise.isEmpty() || setsStr.isEmpty() || repsStr.isEmpty() || intensity.isEmpty()) {
+        if (exercise.isEmpty() || setsStr.isEmpty() || repsStr.isEmpty() || intensity.isEmpty() || weightStr.isEmpty() || comment.isEmpty()) {
             ToastMessage.showMessage(getActivity(), getActivity().getString(R.string.fill_all_fields));
 
             return false;

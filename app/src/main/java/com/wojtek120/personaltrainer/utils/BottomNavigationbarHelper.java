@@ -12,9 +12,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.home.MainActivity;
 import com.wojtek120.personaltrainer.plans.PlansActivity_;
-import com.wojtek120.personaltrainer.profile.ProfileActivity_;
 import com.wojtek120.personaltrainer.predefined.PredefinedPlansActivity_;
-import com.wojtek120.personaltrainer.stats.StatsActivity;
+import com.wojtek120.personaltrainer.profile.ProfileActivity_;
+import com.wojtek120.personaltrainer.stats.StatsActivity_;
 
 /**
  * Bottom navigation bar helper
@@ -53,7 +53,7 @@ public class BottomNavigationbarHelper {
                         break;
 
                     case R.id.iconStats:
-                        intent = new Intent(context, StatsActivity.class);
+                        intent = new Intent(context, StatsActivity_.class);
                         context.startActivity(intent);
                         break;
 

@@ -130,4 +130,10 @@
     <string name="select_and_add_plan">Wybierz nowy plan i dodaj do dziennika</string>
     <string name="add_predefined_plan_title">Czy dodać plan do Twojego dziennika treningowego?</string>
     <string name="add_predefined_plan_message">Jeśli chcesz dodać plan do swojego dziennika treningowego, naciśnij \"Zatwierdź\" i wybierz datę rozpoczęcia programu.</string>
+    <string name="weight_hint">Ciężar</string>
+    <string name="comment_hint">Komentarz</string>
+    <string name="intensity_in_listview">%1RM:</string>
+    <string name="comment">komentarz:</string>
+    <string name="stats_header">Twoje statystyki</string>
+    <string name="volume">Objętość</string>
 </resources>

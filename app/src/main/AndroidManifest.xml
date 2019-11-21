@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".predefined.PredefinedPlansActivity_" />
-        <activity android:name=".stats.StatsActivity" />
+        <activity android:name=".stats.StatsActivity_" />
         <activity android:name=".plans.PlansActivity_" />
         <activity android:name=".plans.DaysActivity_" />
         <activity android:name=".plans.ExercisesActivity_" />

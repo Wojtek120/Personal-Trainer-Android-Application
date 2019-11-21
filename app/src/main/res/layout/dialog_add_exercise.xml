@@ -48,6 +48,24 @@
         android:hint="@string/intensity_hint"
         android:textAlignment="center"/>
 
+    <EditText
+        android:id="@+id/weightEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:inputType="numberDecimal"
+        android:hint="@string/weight_hint"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/commentEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:inputType="text"
+        android:hint="@string/comment_hint"
+        android:textAlignment="center"/>
+
 
     <RelativeLayout
         android:layout_width="wrap_content"

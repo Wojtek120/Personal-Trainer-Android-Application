@@ -9,7 +9,9 @@
 + [Firebase](https://firebase.google.com/) - database, authentication
 + [Lombok](https://projectlombok.org/) - some useful annotations 
 + [androidannotations](https://github.com/androidannotations) - even more useful annotations 
-+ [Material Design](https://material.io/develop/android/) - CoordinatorLayout, Toolbars, TextInputLayout
++ [Material Design](https://material.io/develop/android/) - material designed elements
 + [BottomNavigationViewEx](https://github.com/ittianyu/BottomNavigationViewEx) - to change the look of bottom navigation bar
 + [Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader) - to load images
 + [CircleImageView](https://github.com/hdodenhof/CircleImageView) - to crop profile images to a circle
++ [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) - charts
++ [MaterialSpinner](https://github.com/tiper/MaterialSpinner) - material designed spinner
