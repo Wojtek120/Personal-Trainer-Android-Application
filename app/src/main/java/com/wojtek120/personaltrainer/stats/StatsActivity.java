@@ -1,7 +1,6 @@
 package com.wojtek120.personaltrainer.stats;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,6 +9,7 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -68,6 +68,9 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
 
     }
 
+    /**
+     * Set up spinner with exercise names and add on item select listener to it
+     */
     private void setUpSpinner() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, exercises.getEXERCISES_LIST(this));
@@ -92,10 +95,17 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
     }
 
 
+    /**
+     * Set up chart
+     *
+     * @param values - list with entries to put in chart
+     */
     void setUpChart(List<Entry> values) {
 
         chart.setTouchEnabled(true);
         chart.setPinchZoom(true);
+
+        chart.animateY(1000);
 
         LineDataSet set1;
         if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
@@ -109,8 +119,9 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
         } else {
             set1 = new LineDataSet(values, getString(R.string.volume));
             set1.setDrawIcons(false);
-            set1.enableDashedLine(10f, 5f, 0f);
-            set1.enableDashedHighlightLine(10f, 5f, 0f);
+//            set1.enableDashedLine(10f, 5f, 0f);
+//            set1.enableDashedHighlightLine(10f, 5f, 0f);
+//            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setColor(Color.DKGRAY);
             set1.setCircleColor(Color.DKGRAY);
             set1.setLineWidth(1f);
@@ -119,7 +130,6 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
             set1.setValueTextSize(9f);
             set1.setDrawFilled(true);
             set1.setFormLineWidth(1f);
-            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setFormSize(15.f);
 
             XAxis xAxis = chart.getXAxis();
@@ -130,6 +140,13 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
             dataSets.add(set1);
             LineData data = new LineData(dataSets);
             chart.setData(data);
+
+            Description description = chart.getDescription();
+            description.setText(getString(R.string.volume));
+//            description.setEnabled(false);
+
+//            Legend legend = chart.getLegend();
+//            legend.setEnabled(false);
         }
 
 

@@ -45,6 +45,7 @@ public class StatsService {
         Date date;
         ExerciseModel exerciseModel;
     }
+
     private class DayWithId {
         String id;
         DayModel dayModel;
@@ -56,7 +57,7 @@ public class StatsService {
 
     private OnSetDataToChartListener onSetDataToChartListener;
 
-    public interface OnSetDataToChartListener{
+    public interface OnSetDataToChartListener {
         void setData(List<Entry> entryList);
     }
 
@@ -66,11 +67,23 @@ public class StatsService {
         database = FirebaseFirestore.getInstance();
     }
 
-    public void setListener(OnSetDataToChartListener activityInstance){
+    /**
+     * Set listener to callback function when data collecting is finished
+     *
+     * @param activityInstance - activity
+     */
+    public void setListener(OnSetDataToChartListener activityInstance) {
         onSetDataToChartListener = activityInstance;
     }
 
 
+    /**
+     * Fill chart with data
+     *
+     * @param chart        - chart view
+     * @param exerciseName - exercise name to look for in database
+     * @param progressBar  - progress bar
+     */
     public void setUpChart(LineChart chart, String exerciseName, ProgressBar progressBar) {
 
         progressBar.setVisibility(View.VISIBLE);
@@ -82,7 +95,6 @@ public class StatsService {
         exerciseModels = Collections.synchronizedList(new ArrayList<>());
         dayList = Collections.synchronizedList(new ArrayList<>());
         entryList = Collections.synchronizedList(new ArrayList<>());
-
 
 
         getUserPlans();
@@ -113,6 +125,11 @@ public class StatsService {
                 });
     }
 
+    /**
+     * Iterate through plans and create task with queries about days
+     *
+     * @param documents - documents
+     */
     private void iterateThroughPlans(List<DocumentSnapshot> documents) {
 
         List<Task<QuerySnapshot>> taskList = new ArrayList<>();
@@ -126,17 +143,19 @@ public class StatsService {
             Task<QuerySnapshot> task = database.collection(DatabaseCollectionNames.PLANS).document(planId).collection(DatabaseCollectionNames.DAYS).orderBy("date").get();
             taskList.add(task);
 
-//            getDays(document.getId());
-
         }
 
 
         waitForDayQueries(taskList);
 
 
-
     }
 
+    /**
+     * Wait when threads get all days and iterate through it to get exercises
+     *
+     * @param taskList - task list with days queries
+     */
     private void waitForDayQueries(List<Task<QuerySnapshot>> taskList) {
 
         Task<List<QuerySnapshot>> allTasksWithDays = Tasks.whenAllSuccess(taskList);
@@ -149,11 +168,18 @@ public class StatsService {
         });
     }
 
+
+    /**
+     * Iterate through days and create task with queries about exercises,
+     * also add days to array - used when finding date of exercise
+     *
+     * @param querySnapshots - querySnapshots
+     */
     private void iterateThroughDays(List<QuerySnapshot> querySnapshots) {
 
         List<Task<QuerySnapshot>> taskList = new ArrayList<>();
 
-        for(QuerySnapshot queryDocumentSnapshots : querySnapshots) {
+        for (QuerySnapshot queryDocumentSnapshots : querySnapshots) {
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
                 Log.d(TAG, "::allTasksWithDays: addOnSuccessListener:: got " + documentSnapshot.getId() + " :: " + documentSnapshot.getData());
@@ -172,6 +198,11 @@ public class StatsService {
 
     }
 
+    /**
+     * Wait to get exercises that match string with its name
+     *
+     * @param taskList - tasks with queries about exercises
+     */
     private void waitForExerciseQueries(List<Task<QuerySnapshot>> taskList) {
 
         Task<List<QuerySnapshot>> allTasksWithDays = Tasks.whenAllSuccess(taskList);
@@ -185,9 +216,15 @@ public class StatsService {
 
     }
 
+    /**
+     * Iterate through exercises and put it in arras,
+     * also create entry list
+     *
+     * @param querySnapshots - querySnapshots
+     */
     private void iterateThroughExercises(List<QuerySnapshot> querySnapshots) {
 
-        for(QuerySnapshot queryDocumentSnapshots : querySnapshots) {
+        for (QuerySnapshot queryDocumentSnapshots : querySnapshots) {
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
                 DocumentReference plan = getDocumentReferenceToPlanOfExercise(documentSnapshot);
@@ -211,11 +248,19 @@ public class StatsService {
     }
 
 
-
+    /**
+     * Get plan document reference from exercise document snapshot (in which this exercise is)
+     *
+     * @param documentSnapshot - documentSnapshot
+     * @return - plan document reference
+     */
     private DocumentReference getDocumentReferenceToPlanOfExercise(QueryDocumentSnapshot documentSnapshot) {
         return documentSnapshot.getReference().getParent().getParent();
     }
 
+    /**
+     * Sort array with exercises by date
+     */
     private void sortDataArray() {
 
         Collections.sort(exerciseModels, (o1, o2) -> {
@@ -226,6 +271,13 @@ public class StatsService {
 
     }
 
+    /**
+     * Put exercise to list with data
+     * Checks in which plan exercise is and puts it with data
+     *
+     * @param exerciseModel - exercise model
+     * @param planId        - plan id in which exercise is
+     */
     private void putExerciseToList(ExerciseModel exerciseModel, String planId) {
 
         for (DayWithId dayWithId : dayList) {
@@ -244,17 +296,19 @@ public class StatsService {
         }
 
 
-
     }
 
 
+    /**
+     * Create list with entries
+     */
     private void createEntryList() {
 
-        for(ExercisesWithData exercisesWithData : exerciseModels) {
+        for (ExercisesWithData exercisesWithData : exerciseModels) {
 
             float volume = (float) exercisesWithData.exerciseModel.getWeight() * exercisesWithData.exerciseModel.getSets() * exercisesWithData.exerciseModel.getReps();
 
-            entryList.add(new Entry(exercisesWithData.date.getTime(), volume ));
+            entryList.add(new Entry(exercisesWithData.date.getTime(), volume));
 
         }
 
@@ -262,13 +316,17 @@ public class StatsService {
 
     }
 
+
+    /**
+     * Run callback function to fill chart with data
+     */
     private void setUpChartAndPutDataToIt() {
 
         progressBar.setVisibility(View.GONE);
 
         Log.d(TAG, "Setting " + entryList);
 
-        if(onSetDataToChartListener != null){
+        if (onSetDataToChartListener != null) {
             onSetDataToChartListener.setData(entryList);
         }
 
