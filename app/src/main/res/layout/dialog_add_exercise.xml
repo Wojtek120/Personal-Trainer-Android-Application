@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="290dp"
+    android:layout_width="290dp"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="15dp">
 
     <TextView
@@ -9,63 +10,100 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_new_exercise"
-        android:textColor="@color/black"
-        android:textSize="20sp"
         android:textAlignment="center"
-        />
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/exerciseSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:spinnerMode="dropdown"/>
-
-    <EditText
-        android:id="@+id/setsEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:inputType="number"
-        android:hint="@string/sets_hint"
-        android:textAlignment="center"/>
+        android:spinnerMode="dropdown" />
 
-    <EditText
-        android:id="@+id/repsEt"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:inputType="number"
-        android:hint="@string/reps_hint"
-        android:textAlignment="center"/>
+        android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/intensityEt"
+        <EditText
+            android:id="@+id/setsEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sets_hint"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:inputType="numberDecimal"
-        android:hint="@string/intensity_hint"
-        android:textAlignment="center"/>
+        android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/weightEt"
+        <EditText
+            android:id="@+id/repsEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/reps_hint"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:inputType="numberDecimal"
-        android:hint="@string/weight_hint"
-        android:textAlignment="center"/>
+        android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/commentEt"
+        <EditText
+            android:id="@+id/intensityEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/intensity_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:inputType="text"
-        android:hint="@string/comment_hint"
-        android:textAlignment="center"/>
+        android:layout_marginTop="10dp">
 
+        <EditText
+            android:id="@+id/weightEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/weight_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/commentEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/comment_hint"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -75,20 +113,20 @@
             android:id="@+id/cancelButtonDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/cancel"
-            android:layout_margin="8dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_margin="8dp"
+            android:text="@string/cancel"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/confirmButtonDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/confirm"
             android:layout_margin="8dp"
-            android:textColor="@color/link"/>
+            android:text="@string/confirm"
+            android:textColor="@color/link"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
