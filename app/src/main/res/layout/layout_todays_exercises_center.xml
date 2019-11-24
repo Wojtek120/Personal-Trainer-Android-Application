@@ -1,0 +1,41 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="22dp"
+        android:paddingStart="22dp"
+        android:paddingRight="22dp"
+        android:paddingEnd="22dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/exercisesTitle"
+            android:text="@string/todays_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="38sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/exercisesDate"
+            android:text="@string/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@id/exercisesTitle"
+            android:background="@drawable/border_bottom_grey"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/exercisesDate"
+            android:id="@+id/exercisesListView">
+
+        </ListView>
+
+    </RelativeLayout>
+
+</merge>

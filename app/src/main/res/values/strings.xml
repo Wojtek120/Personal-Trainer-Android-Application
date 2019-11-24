@@ -136,4 +136,6 @@
     <string name="comment">komentarz:</string>
     <string name="stats_header">Twoje statystyki</string>
     <string name="volume">Objętość</string>
+    <string name="todays_training">Dzisiejszy trening</string>
+    <string name="todays_exercises">Dzisiejsze ćwiczenia</string>
 </resources>

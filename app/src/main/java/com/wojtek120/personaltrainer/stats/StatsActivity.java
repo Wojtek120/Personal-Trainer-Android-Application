@@ -162,6 +162,7 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
         bottomNavigationBarSetup.setupNavigationBar(bottomNavigationViewEx, StatsActivity.this, ACTIVITY_NUMBER);
     }
 
+
     @Override
     public void setData(List<Entry> entryList) {
 
