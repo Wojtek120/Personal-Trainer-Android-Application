@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -134,6 +135,7 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setValueFormatter(new MyXAxisValueFormatter());
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -145,8 +147,8 @@ public class StatsActivity extends AppCompatActivity implements StatsService.OnS
             description.setText(getString(R.string.volume));
 //            description.setEnabled(false);
 
-//            Legend legend = chart.getLegend();
-//            legend.setEnabled(false);
+            Legend legend = chart.getLegend();
+            legend.setEnabled(false);
         }
 
 

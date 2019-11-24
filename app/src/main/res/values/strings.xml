@@ -138,4 +138,5 @@
     <string name="volume">Objętość</string>
     <string name="todays_training">Dzisiejszy trening</string>
     <string name="todays_exercises">Dzisiejsze ćwiczenia</string>
+    <string name="kg">[kg]</string>
 </resources>

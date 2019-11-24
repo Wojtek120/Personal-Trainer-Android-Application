@@ -17,34 +17,66 @@
 
         <com.tiper.MaterialSpinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_marginTop="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="@string/exercises"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="@string/exercises" />
 
-            <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/bottomNavigationbar"
-                android:layout_below="@+id/spinner"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="50dp">
+        <TextView
+            android:id="@+id/volumeTv"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner"
+            android:layout_marginLeft="3dp"
+            android:text="@string/volume"
+            android:textSize="12sp"
+            android:layout_marginStart="3dp" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/kgTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/volumeTv"
+            android:text="@string/kg"
+            android:textSize="12sp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp" />
 
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/chartRl"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomNavigationbar"
+            android:layout_below="@+id/spinner"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="65dp">
 
-        <include layout="@layout/bottom_navigationbar" />
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dateTv"
+            android:gravity="center"
+            android:layout_below="@+id/chartRl"
+            android:layout_marginTop="-69dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="12sp" />
+
+        <include
+            layout="@layout/bottom_navigationbar" />
 
 
         <ProgressBar
