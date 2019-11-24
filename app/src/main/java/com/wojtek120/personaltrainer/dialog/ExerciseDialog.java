@@ -83,6 +83,8 @@ public class ExerciseDialog extends DialogFragment {
             setsEt.setText(Integer.toString(exercise.getSets()));
             repsEt.setText(Integer.toString(exercise.getReps()));
             intensityEt.setText(Double.toString(exercise.getIntensity()));
+            weightEt.setText(Double.toString(exercise.getWeight()));
+            commentEt.setText(exercise.getComment());
         }
 
     }
