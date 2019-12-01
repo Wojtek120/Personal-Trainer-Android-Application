@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.tiper.MaterialSpinner;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.model.ExerciseModel;
 import com.wojtek120.personaltrainer.utils.Exercises;
@@ -33,7 +33,7 @@ public class ExerciseDialog extends DialogFragment {
     Exercises exercises;
 
     @ViewById
-    Spinner exerciseSpinner;
+    MaterialSpinner exerciseSpinner;
     @ViewById
     EditText setsEt;
     @ViewById
