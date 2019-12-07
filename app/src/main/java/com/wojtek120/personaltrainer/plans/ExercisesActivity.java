@@ -16,7 +16,7 @@ import com.wojtek120.personaltrainer.dialog.LongClickExerciseDialog;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.model.ExerciseModel;
-import com.wojtek120.personaltrainer.utils.database.ExercisesService;
+import com.wojtek120.personaltrainer.services.ExercisesService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

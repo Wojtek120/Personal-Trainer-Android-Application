@@ -1,4 +1,4 @@
-package com.wojtek120.personaltrainer.utils.database;
+package com.wojtek120.personaltrainer.services;
 
 import android.content.Context;
 import android.content.Intent;

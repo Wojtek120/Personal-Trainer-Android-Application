@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.wojtek120.personaltrainer.authentication.LoginActivity_;
-import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
+import com.wojtek120.personaltrainer.services.AuthenticationFacade;
 
 public class StartUp extends Application {
 

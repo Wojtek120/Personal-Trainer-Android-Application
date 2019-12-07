@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
-import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
+import com.wojtek120.personaltrainer.services.AuthenticationFacade;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;

@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wojtek120.personaltrainer.R;
-import com.wojtek120.personaltrainer.utils.database.UserService;
+import com.wojtek120.personaltrainer.services.UserService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

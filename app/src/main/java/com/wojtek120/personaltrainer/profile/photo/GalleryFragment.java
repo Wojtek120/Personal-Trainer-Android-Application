@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.adapter.GridViewAdapter;
-import com.wojtek120.personaltrainer.utils.database.ProfileService;
+import com.wojtek120.personaltrainer.services.ProfileService;
 import com.wojtek120.personaltrainer.utils.files.ListPaths;
 import com.wojtek120.personaltrainer.utils.files.Paths;
 

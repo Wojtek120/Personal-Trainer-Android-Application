@@ -18,8 +18,8 @@ import com.wojtek120.personaltrainer.profile.photo.EditProfilePhotoActivity_;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
 import com.wojtek120.personaltrainer.utils.NumberUtils;
 import com.wojtek120.personaltrainer.utils.ToastMessage;
-import com.wojtek120.personaltrainer.utils.database.AuthenticationFacade;
-import com.wojtek120.personaltrainer.utils.database.ProfileService;
+import com.wojtek120.personaltrainer.services.AuthenticationFacade;
+import com.wojtek120.personaltrainer.services.ProfileService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

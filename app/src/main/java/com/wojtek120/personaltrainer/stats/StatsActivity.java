@@ -23,7 +23,7 @@ import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.utils.Exercises;
 import com.wojtek120.personaltrainer.utils.MyXAxisValueFormatter;
-import com.wojtek120.personaltrainer.utils.database.StatsService;
+import com.wojtek120.personaltrainer.services.StatsService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

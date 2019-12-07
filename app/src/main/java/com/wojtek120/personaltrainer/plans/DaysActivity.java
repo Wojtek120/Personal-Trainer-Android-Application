@@ -17,7 +17,7 @@ import com.wojtek120.personaltrainer.dialog.PlanDialog;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.model.DayModel;
-import com.wojtek120.personaltrainer.utils.database.DaysService;
+import com.wojtek120.personaltrainer.services.DaysService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

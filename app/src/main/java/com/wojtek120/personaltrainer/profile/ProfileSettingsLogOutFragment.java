@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.authentication.LoginActivity_;
-import com.wojtek120.personaltrainer.utils.database.UserService;
+import com.wojtek120.personaltrainer.services.UserService;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;

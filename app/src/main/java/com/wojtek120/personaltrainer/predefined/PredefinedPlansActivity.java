@@ -12,7 +12,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
-import com.wojtek120.personaltrainer.utils.database.PredefinedPlansService;
+import com.wojtek120.personaltrainer.services.PredefinedPlansService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

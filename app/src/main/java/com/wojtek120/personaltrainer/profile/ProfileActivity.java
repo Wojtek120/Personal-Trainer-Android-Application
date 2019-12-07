@@ -15,7 +15,7 @@ import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.general.ActivityNumbers;
 import com.wojtek120.personaltrainer.general.BottomNavigationBarSetup;
 import com.wojtek120.personaltrainer.utils.ImageLoaderSingleton;
-import com.wojtek120.personaltrainer.utils.database.ProfileService;
+import com.wojtek120.personaltrainer.services.ProfileService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;

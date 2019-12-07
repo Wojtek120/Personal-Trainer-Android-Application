@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.wojtek120.personaltrainer.R;
 import com.wojtek120.personaltrainer.model.ExerciseModel;
-import com.wojtek120.personaltrainer.utils.database.DatabaseCollectionNames;
+import com.wojtek120.personaltrainer.services.DatabaseCollectionNames;
 
 import java.util.ArrayList;
 
